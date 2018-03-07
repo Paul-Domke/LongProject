@@ -1,5 +1,3 @@
-from .artime import *
-
 MWF8 = [TimeSlot(WeekTime(1, 8, 0), WeekTime(1, 8, 50)),
         TimeSlot(WeekTime(3, 8, 0), WeekTime(3, 8, 50)),
         TimeSlot(WeekTime(5, 8, 0), WeekTime(5, 8, 50)),]
