@@ -46,6 +46,34 @@ class OurTime:
         elif self.minute > other.minute:
             return 1
 
+
+    def alter(self, dday, dhour, dmin):
+        newmin = self.minute + dmin
+        if newmin < 0:
+            newmin += 60
+            dhour -= 1
+        elif newmin > 59:
+            newmin -= 60
+            dhour += 1
+
+        newhour = self.hour + dhour
+        if newhour < 0:
+            newhour += 24
+            dday -= 1
+        elif newhour > 23:
+            newhour -= 24
+            dday += 1
+
+        newday = self.day + dday
+        if newday < 0:
+            newday += 7
+        elif newday > 6:
+            newday -= 7
+
+        return OurTime(newday, newhour, newmin)
+
+
+
 # should throw exceptions
 #OurTime(7, 0, 0)
 #OurTime(0, 24, 0)

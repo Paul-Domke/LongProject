@@ -26,6 +26,11 @@ class TimeSlot:
             return True
         return False
 
+    def overlapwbuffer(self, other, bday, bhour, bmin):
+        buffself = TimeSlot(self.start.alter(-bday, -bhour, -bmin), self.end.alter(bday, bhour, bmin))
+        buffother = TimeSlot(other.start.alter(-bday, -bhour, -bmin), other.end.alter(bday, bhour, bmin))
+        return buffself.overlap(buffother)
+
 softeng = TimeSlot(OurTime(1, 10, 0), OurTime(1, 10, 50))
 databases = TimeSlot(OurTime(1, 10, 0), OurTime(1, 10, 50))
 raptutorial = TimeSlot(OurTime(1, 10, 30), OurTime(1, 11, 50))
