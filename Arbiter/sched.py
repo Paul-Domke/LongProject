@@ -57,6 +57,7 @@ def iscomplete(assign, csp):
 
 def check_shared(times, rooms, assign):
     """
+    DEPRECATED
     Simple heuristic to help determine Most Constrained Variable
     Checks how many possible times and possible rooms are already being used in the assignment
     Returns shared times + shared rooms
