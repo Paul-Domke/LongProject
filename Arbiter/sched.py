@@ -78,16 +78,18 @@ def get_possible_values(times, rooms, assign):
     for room in rooms:
         for time in times:
 
-            noconflicts = True
-            for key,val in assign:
-                if room == val['room']:
-                    if time.overlaps(val['time']):
-                        noconflicts = False
-
-            if noconflicts:
+            if room not in assign:
                 possible_values.append([room, time])
-    return posssible_values
+            else:
+                noconflicts = True
+                for key,val in assign:
+                    if room == val['room']:
+                        if time.overlaps(val['time']):
+                            noconflicts = False
+                if noconflicts:
+                    possible_values.append([room, time])
 
+    return possible_values
 
 def deprecated_select_unassigned_variable(vars, assign, csp):
     """ Picks variable to assign next, returns reference to variable """
@@ -103,7 +105,15 @@ def deprecated_select_unassigned_variable(vars, assign, csp):
 
 def select_unassigned_variable(vars, assign, csp):
     """ Picks variable to assign next, returns reference to variable """
-
+    mcv = None
+    mcvvals = 100
+    for var in vars:
+        if var not in assign:
+            varvals = len(check_possible_values(csp[var]['time'], csp[var]['room'], assign))
+            if varshared > mcvshared:
+                mcv = var
+                mcvvals = varvals
+    return mcv
 
 def order_domain_values(var, assignment, csp):
     """ Chooses order to consider var's possile values, returns list of values """
