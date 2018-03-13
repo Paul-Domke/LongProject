@@ -19,6 +19,7 @@ example_preferences = {1:{'prof':1
 class SchedCSP:
     def __init__(self, pref):
         self.variables = pref.keys()
+        self.domains = {var:get_possible_values(pref[var]['time'], pref[var]['room']) for var in self.variables}
         self.constraints = []
         self.pref = pref
 
@@ -32,6 +33,9 @@ def backtracking_search(csp):
     return recursive_backtracking({}, csp)
 
 def recursive_backtracking(assignment, csp):
+    """
+    Recursive backtracking search to create complete solution for CSP
+    """
     if iscomplete(assignment, csp):
          return assignment
     var = select_unassigned_variable(csp.variables, assignment, csp)
@@ -111,13 +115,13 @@ def select_unassigned_variable(vars, assign, csp):
     for var in vars:
         if var not in assign:
             varvals = len(check_possible_values(csp[var]['time'], csp[var]['room'], assign))
-            if varshared > mcvshared:
+            if varvals > mcvvals:
                 mcv = var
                 mcvvals = varvals
     return mcv
 
 def order_domain_values(var, assignment, csp):
-    """ Chooses order to consider var's possile values, returns list of values """
+    """ Chooses order to consider var's possible values, returns list of values """
 
 def con_nosametimeplace(assign):
 
