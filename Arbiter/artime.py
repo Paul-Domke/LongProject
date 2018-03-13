@@ -122,7 +122,7 @@ class TimeSlot:
             raise
 
     def __str__(self):
-        "Returns string representation in form 'Weekday Hour:Minute - Weekday Hour:Minute'"
+        """Returns string representation in form 'Weekday Hour:Minute - Weekday Hour:Minute'"""
         return str(self.start) + " - " + str(self.end)
 
     def overlap(self, other):
@@ -146,3 +146,40 @@ class TimeSlot:
         buffself = TimeSlot(self.start.alter(-bday, -bhour, -bmin), self.end.alter(bday, bhour, bmin))
         buffother = TimeSlot(other.start.alter(-bday, -bhour, -bmin), other.end.alter(bday, bhour, bmin))
         return buffself.overlap(buffother)
+
+class TimePref:
+    """
+    A set of timeslots that represent a full scheduling of a course over multiple weekdays
+    """
+    def __init__(self, slotlist):
+        """ Makes sure timeslots do not overlap before instatiating time preference """
+        for slot in slotlist:
+            for slot2 in slotlist:
+                if slot != slot2:
+                    if slot.overlap(slot2):
+                        raise Exception('Invalid Time Preference','Overlapping Timeslots')
+
+        self.slots = slotlist
+
+    def __str__(self):
+        s = ""
+        for slot in self.slots[:-1]:
+            s += str(slot) + ", "
+        s += str(self.slots[-1])
+        return s
+
+    def overlap(self, other):
+        """ Check if I conflict with other TimePref """
+        for myslot in self.slots:
+            for urslot in other.slots:
+                if myslot.overlap(urslot):
+                    return True
+        return False
+
+    def overlapwbuffer(self, other, bday, bhour, bmin):
+        """ Check if I conflict with other TimePref, applying buffers to ends of slots"""
+        for myslot in self.slots:
+            for urslot in other.slots:
+                if myslot.overlapwbuffer(urslot, bay, bhour, bmin):
+                    return True
+        return False
