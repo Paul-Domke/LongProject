@@ -70,14 +70,26 @@ def check_shared(times, rooms, assign):
             shared += 1
     return shared
 
-def check_possible_values(times, rooms, assign):
+def get_possible_values(times, rooms, assign):
+    """
+    Generates list of possible values given set of times and rooms and the current assignment
+    """
     possible_values =[]
     for room in rooms:
         for time in times:
-            possible_values.append([room, time])
+
+            noconflicts = True
+            for key,val in assign:
+                if room == val['room']:
+                    if time.overlaps(val['time']):
+                        noconflicts = False
+
+            if noconflicts:
+                possible_values.append([room, time])
+    return posssible_values
 
 
-def select_unassigned_variable(vars, assign, csp):
+def deprecated_select_unassigned_variable(vars, assign, csp):
     """ Picks variable to assign next, returns reference to variable """
     mcv = None
     mcvshared = 0
@@ -89,6 +101,8 @@ def select_unassigned_variable(vars, assign, csp):
                 mcvshared = varshared
     return mcv
 
+def select_unassigned_variable(vars, assign, csp):
+    """ Picks variable to assign next, returns reference to variable """
 
 
 def order_domain_values(var, assignment, csp):
