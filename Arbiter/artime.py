@@ -125,7 +125,7 @@ class TimeSlot:
         """Returns string representation in form 'Weekday Hour:Minute - Weekday Hour:Minute'"""
         return str(self.start) + " - " + str(self.end)
 
-    def overlap(self, other):
+    def overlaps(self, other):
         """
         Checks if this TimeSlot overlaps with other TimeSlot,
         returns True if they do and False if they do not.
@@ -141,11 +141,11 @@ class TimeSlot:
             return True
         return False
 
-    def overlapwbuffer(self, other, bday, bhour, bmin):
+    def overlapswbuffer(self, other, bday, bhour, bmin):
         """ Calls overlap with an additional buffer of bday, bhour, and bminute on both ends of both TimeSlots"""
         buffself = TimeSlot(self.start.alter(-bday, -bhour, -bmin), self.end.alter(bday, bhour, bmin))
         buffother = TimeSlot(other.start.alter(-bday, -bhour, -bmin), other.end.alter(bday, bhour, bmin))
-        return buffself.overlap(buffother)
+        return buffself.overlaps(buffother)
 
 class TimePref:
     """
@@ -156,7 +156,7 @@ class TimePref:
         for slot in slotlist:
             for slot2 in slotlist:
                 if slot != slot2:
-                    if slot.overlap(slot2):
+                    if slot.overlaps(slot2):
                         raise Exception('Invalid Time Preference','Overlapping Timeslots')
 
         self.slots = slotlist
@@ -168,18 +168,18 @@ class TimePref:
         s += str(self.slots[-1])
         return s
 
-    def overlap(self, other):
+    def overlaps(self, other):
         """ Check if I conflict with other TimePref """
         for myslot in self.slots:
             for urslot in other.slots:
-                if myslot.overlap(urslot):
+                if myslot.overlaps(urslot):
                     return True
         return False
 
-    def overlapwbuffer(self, other, bday, bhour, bmin):
+    def overlapswbuffer(self, other, bday, bhour, bmin):
         """ Check if I conflict with other TimePref, applying buffers to ends of slots"""
         for myslot in self.slots:
             for urslot in other.slots:
-                if myslot.overlapwbuffer(urslot, bay, bhour, bmin):
+                if myslot.overlapswbuffer(urslot, bay, bhour, bmin):
                     return True
         return False

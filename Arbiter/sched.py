@@ -1,3 +1,7 @@
+"""
+Module to hold scheduling algorithm.
+"""
+
 from .artime import *
 from .ucs import *
 

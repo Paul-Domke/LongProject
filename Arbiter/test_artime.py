@@ -46,13 +46,13 @@ def test_TimeSlot_init():
     with pytest.raises(Exception):
         paradox = TimeSlot(WeekTime(1, 10, 50), WeekTime(1, 10, 0))
 
-def test_TimeSlot_overlap():
-    assert softeng.overlap(databases) == True
-    assert softeng.overlap(raptutorial) == True
-    assert raptutorial.overlap(databases) == True
-    assert softeng.overlap(acting2) == False
-    assert softeng.overlap(rightafter) == False
-    assert rightafter.overlap(softeng) == False
+def test_TimeSlot_overlaps():
+    assert softeng.overlaps(databases) == True
+    assert softeng.overlaps(raptutorial) == True
+    assert raptutorial.overlaps(databases) == True
+    assert softeng.overlaps(acting2) == False
+    assert softeng.overlaps(rightafter) == False
+    assert rightafter.overlaps(softeng) == False
 
 
 
@@ -73,7 +73,7 @@ def test_TimePref_str():
                    TimeSlot(WeekTime(5, 10, 0), WeekTime(5, 10, 50)),])
     assert str(tp) == 'Monday 10:00 - Monday 10:50, Wednesday 10:00 - Wednesday 10:50, Friday 10:00 - Friday 10:50'
 
-def test_TimePref_overlap():
+def test_TimePref_overlaps():
     tp = TimePref([TimeSlot(WeekTime(1, 10, 0), WeekTime(1, 10, 50)),
                    TimeSlot(WeekTime(3, 10, 0), WeekTime(3, 10, 50)),
                    TimeSlot(WeekTime(5, 10, 0), WeekTime(5, 10, 50)),])
@@ -84,6 +84,6 @@ def test_TimePref_overlap():
 
     notconflict = TimePref([TimeSlot(WeekTime(2, 10, 0), WeekTime(2, 10, 50)),])
 
-    assert tp.overlap(tp) == True
-    assert tp.overlap(tpconflict) == True
-    assert tp.overlap(notconflict)== False
+    assert tp.overlaps(tp) == True
+    assert tp.overlaps(tpconflict) == True
+    assert tp.overlaps(notconflict)== False
