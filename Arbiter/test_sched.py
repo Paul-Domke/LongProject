@@ -40,6 +40,11 @@ def test_con_nosameproftime():
     assert con_nosameproftime(goodass) == True
     assert con_nosameproftime(badass) == False
 
+def test_get_mcv():
+    d = build_domains(example_preferences)
+
+    assert get_mcv(d) == 2
+
 def test_get_solution():
     solution = get_solution(example_preferences)
     assert solution[1]['room'] == 'HNE 168' and solution[2]['room'] == 'HNE 168'

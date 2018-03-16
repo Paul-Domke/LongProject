@@ -9,13 +9,15 @@ def make_solution(assign, variables, domains, constraints):
         return assign
 
 
-    #Remove a variable X from variables
-    var = variables.pop(0)
+    # Remove a variable var from variables
+    # pick variable using Most Constrained Variable
+    var = get_mcv(domains)
+    variables.remove(var)
     #print('var', var)
-    # TODO: pick variable using Most Constrained Variable
+
 
     # TODO: order domain values by Least Constraining Value
-    for value in domains[var]:
+    for value in domains.pop(var):
         #print('value',value)
         newassign = copy.deepcopy(assign)
         newassign[var] = value
@@ -72,8 +74,8 @@ def build_domains(pref):
 def get_mcv(domains):
     mcv = None
     smallest = 1000
-    for key,val in domains:
-        d = len(val)
+    for key in domains:
+        d = len(domains[key])
         if d < smallest:
             smallest = d
             mcv = key
