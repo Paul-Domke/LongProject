@@ -1,36 +1,44 @@
 from .artime import *
+import copy
 
 
 
 def make_solution(assign, variables, domains, constraints):
+    #print('top', assign)
     if iscomplete(assign, variables):
         return assign
 
 
     #Remove a variable X from variables
     var = variables.pop(0)
+    #print('var', var)
     # TODO: pick variable using Most Constrained Variable
 
     # TODO: order domain values by Least Constraining Value
     for value in domains[var]:
-
-        newassign = assign
+        #print('value',value)
+        newassign = copy.deepcopy(assign)
         newassign[var] = value
         thisisok = False not in [constraint(newassign) for constraint in constraints]
         # if var = value is consistent with assign according to the constraints then
-        thisisok = True
+        #thisisok = True
         if thisisok:
+            #print('got to 1')
             # Add var = value to assign
             assign = newassign
-            newdomains = domains
+            newdomains = copy.deepcopy(domains)
             # for uvar in variables (i.e., uvar an unassigned variable), uvar − − − var (i.e., uvar a neighbor of var in the constrained graph) do
             #       Remove values for uvar from newdomains(uvar ) that are inconsistent with assign
             for uvar in variables:
+                #print('got to 2')
                 for uval in newdomains[uvar]:
-                    uassign = newassign
+                    uassign = copy.deepcopy(newassign)
                     uassign[uvar] = uval
+                    #print(uvar, uval, [constraint(uassign) for constraint in constraints])
                     if False in [constraint(uassign) for constraint in constraints]:
+                        #print('got to 3')
                         newdomains[uvar].remove(uval)
+                        #print(newdomains)
 
             # if for all uvar ∈ variables, uvar − − − var, we have newdomains (uvar ) not empty then
             if [] not in newdomains.values():

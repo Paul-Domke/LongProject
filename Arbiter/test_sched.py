@@ -41,4 +41,7 @@ def test_con_nosameproftime():
     assert con_nosameproftime(badass) == False
 
 def test_get_solution():
-    assert get_solution(example_preferences) == goodass
+    solution = get_solution(example_preferences)
+    assert solution[1]['room'] == 'HNE 168' and solution[2]['room'] == 'HNE 168'
+    assert solution[1]['time'].equals(MWF9)
+    assert solution[2]['time'].equals(MWF8)

@@ -147,6 +147,9 @@ class TimeSlot:
         buffother = TimeSlot(other.start.alter(-bday, -bhour, -bmin), other.end.alter(bday, bhour, bmin))
         return buffself.overlaps(buffother)
 
+    def equals(self, other):
+        return self.start.compare(other.start) == 0 and self.end.compare(other.end) == 0
+
 class TimePref:
     """
     A set of timeslots that represent a full scheduling of a course over multiple weekdays
@@ -183,3 +186,9 @@ class TimePref:
                 if myslot.overlapswbuffer(urslot, bay, bhour, bmin):
                     return True
         return False
+
+    def equals(self, other):
+        for myslot in self.slots:
+            if True not in [myslot.equals(urslot) for urslot in other.slots]:
+                return False
+        return True
