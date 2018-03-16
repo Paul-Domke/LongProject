@@ -45,8 +45,16 @@ def test_get_mcv():
 
     assert get_mcv(d) == 2
 
+def test_how_constraining():
+    d = build_domains(example_preferences)
+    vals = d.pop(1)
+
+    assert how_constraining(vals[0], d) == 1
+    assert how_constraining(vals[1], d) == 0
+
 def test_get_solution():
     solution = get_solution(example_preferences)
-    assert solution[1]['room'] == 'HNE 168' and solution[2]['room'] == 'HNE 168'
+    assert solution[1]['room'] == 'HNE 168'
+    assert solution[2]['room'] == 'HNE 168'
     assert solution[1]['time'].equals(MWF9)
     assert solution[2]['time'].equals(MWF8)

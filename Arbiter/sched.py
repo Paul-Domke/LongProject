@@ -2,6 +2,9 @@ from .artime import *
 import copy
 
 
+def get_solution(pref):
+    cons = [con_nosametimeplace, con_nosameproftime]
+    return make_solution({}, list(pref.keys()), build_domains(pref), cons)
 
 def make_solution(assign, variables, domains, constraints):
     #print('top', assign)
@@ -16,8 +19,10 @@ def make_solution(assign, variables, domains, constraints):
     #print('var', var)
 
 
-    # TODO: order domain values by Least Constraining Value
-    for value in domains.pop(var):
+    # order domain values by Least Constraining Value
+    vals = sorted(domains.pop(var), key=lambda val:how_constraining(val, domains))
+
+    for value in vals:
         #print('value',value)
         newassign = copy.deepcopy(assign)
         newassign[var] = value
@@ -30,7 +35,7 @@ def make_solution(assign, variables, domains, constraints):
             assign = newassign
             newdomains = copy.deepcopy(domains)
             # for uvar in variables (i.e., uvar an unassigned variable), uvar − − − var (i.e., uvar a neighbor of var in the constrained graph) do
-            #       Remove values for uvar from newdomains(uvar ) that are inconsistent with assign
+            #       Remove values for uvar from newdomains[uvar] that are inconsistent with assign
             for uvar in variables:
                 #print('got to 2')
                 for uval in newdomains[uvar]:
@@ -81,8 +86,18 @@ def get_mcv(domains):
             mcv = key
     return mcv
 
+def how_constraining(val, domains):
+    out = 0
+    for domain in domains.values():
+        for other in domain:
+            if val['room'] == other['room'] or val['prof'] == other['prof']:
+                if val['time'].overlaps(other['time']):
+                    out += 1
+    return out
+
+
 def con_nosametimeplace(assign):
-    """ Takes assignment and determines whether it has a room double booked"""
+    """ Takes assignment and determines whether it has a room double booked """
     vals = list(assign.values())
     i = 1
     for val in vals:
@@ -94,7 +109,7 @@ def con_nosametimeplace(assign):
 
 
 def con_nosameproftime(assign):
-    """ Takes assignment and determines whether it has a professor in 2 place at once """
+    """ Takes assignment and determines whether it has a professor in 2 places at once """
     vals = list(assign.values())
     i = 1
     for val in vals:
@@ -109,8 +124,3 @@ def con_classfits(assign):
 
 def make_class_conflict_con(courseid1, courseid2):
     pass
-
-cons = [con_nosametimeplace, con_nosameproftime]
-
-def get_solution(pref):
-    return make_solution({}, list(pref.keys()), build_domains(pref), cons)
