@@ -191,4 +191,7 @@ class TimePref:
         for myslot in self.slots:
             if True not in [myslot.equals(urslot) for urslot in other.slots]:
                 return False
+        for urslot in other.slots:
+            if True not in [urslot.equals(myslot) for myslot in self.slots]:
+                return False
         return True

@@ -54,7 +54,9 @@ def test_TimeSlot_overlaps():
     assert softeng.overlaps(rightafter) == False
     assert rightafter.overlaps(softeng) == False
 
-
+def test_TimeSlot_equals():
+    assert softeng.equals(databases)
+    assert not softeng.equals(raptutorial)
 
 def test_TimePref_init():
     with pytest.raises(Exception):
@@ -87,3 +89,21 @@ def test_TimePref_overlaps():
     assert tp.overlaps(tp) == True
     assert tp.overlaps(tpconflict) == True
     assert tp.overlaps(notconflict)== False
+
+def test_TimePref_equals():
+    tp = TimePref([TimeSlot(WeekTime(1, 10, 0), WeekTime(1, 10, 50)),
+                   TimeSlot(WeekTime(3, 10, 0), WeekTime(3, 10, 50)),
+                   TimeSlot(WeekTime(5, 10, 0), WeekTime(5, 10, 50)),])
+
+    tpconflict = TimePref([TimeSlot(WeekTime(2, 10, 0), WeekTime(2, 10, 50)),
+                           TimeSlot(WeekTime(4, 10, 0), WeekTime(4, 10, 50)),
+                           TimeSlot(WeekTime(5, 10, 30), WeekTime(5, 11, 20)),])
+
+    tpplus = TimePref([TimeSlot(WeekTime(1, 10, 0), WeekTime(1, 10, 50)),
+                       TimeSlot(WeekTime(3, 10, 0), WeekTime(3, 10, 50)),
+                       TimeSlot(WeekTime(5, 10, 0), WeekTime(5, 10, 50)),
+                       TimeSlot(WeekTime(6, 1, 1), WeekTime(6, 1, 2)),])
+
+    assert tp.equals(tp)
+    assert not tp.equals(tpconflict)
+    assert not tp.equals(tpplus)

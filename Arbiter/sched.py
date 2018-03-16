@@ -19,9 +19,9 @@ def make_solution(assign, variables, domains, constraints):
         #print('value',value)
         newassign = copy.deepcopy(assign)
         newassign[var] = value
-        thisisok = False not in [constraint(newassign) for constraint in constraints]
+        #thisisok = False not in [constraint(newassign) for constraint in constraints]
         # if var = value is consistent with assign according to the constraints then
-        #thisisok = True
+        thisisok = True
         if thisisok:
             #print('got to 1')
             # Add var = value to assign
@@ -68,6 +68,16 @@ def build_domains(pref):
                                         'room':room,
                                         'time':time})
     return domains
+
+def get_mcv(domains):
+    mcv = None
+    smallest = 1000
+    for key,val in domains:
+        d = len(val)
+        if d < smallest:
+            smallest = d
+            mcv = key
+    return mcv
 
 def con_nosametimeplace(assign):
     """ Takes assignment and determines whether it has a room double booked"""
