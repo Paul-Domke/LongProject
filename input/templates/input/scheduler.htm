@@ -1,0 +1,38 @@
+﻿{% extends "input/header.html" %}
+{% block content %}
+<p> 
+<!DOCTYPE html>
+<html>
+<body>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<h1>Scheduler v1.0</h1>
+<form action="/action_page.php">
+	<label for="courseName">Course Name:</label>
+	<textarea rows="1" cols="20" name="courseName" id="courseName"></textarea>
+	<label for="roomPreference">Room Preference:</label>
+	<textarea rows="1" cols="20" name="roomPreference" id="roomPreference"></textarea>
+		<label for="classSize">Class Size:</label>
+	<textarea rows="1" cols="20" name="classSize" id="classSize"></textarea>
+	<label for="requiredEquipment">Required Equipment:</label>
+	<select name="requiredEquipment" id="requiredEquipment">
+		<option value="chemlab">Chemistry Lab</option>
+		<option value="complab">Computer Lab</option>
+		<option value="biolab">Biology Lab</option>
+		<option value="whiteboards">Whiteboards</option>
+		<option value="overhead">Overhead/screen</option>
+	</select>
+	<label for="time1">Preferred Teaching Time:</label>
+	<select name="time1" id="time1">
+		<option value="9/10">9am-10am</option>
+		<option value="10/11">10am-11am</option>
+		<option value="11/12">11am-12pm</option>
+		<option value="12/1">12pm-1pm</option>
+		<option value="1/2">1pm-2pm</option>
+	</select>
+	<input type ="submit" value= "Add Class">
+</form>
+
+</body>
+</html></p>
+
+{% endblock %}
