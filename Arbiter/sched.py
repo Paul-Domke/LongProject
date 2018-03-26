@@ -3,6 +3,22 @@ import copy
 
 
 def get_solution(pref):
+    """
+    This is the function to call, what this whole module is forself.
+    It takes a python dictionary representing preferences, which must have
+    entries of the following form:
+
+    { COURSE_IDENTIFIER:{'prof':PROFESSOR_IDENTIFIER,
+                         'time':LIST_OF_TIMES,
+                         'room':LIST_OF_ROOMS,},}
+
+    It will return a solution also in the form of a dictionary:
+
+    { COURSE_IDENTIFIER:{'time':ASSIGNED_TIME,
+                         'room':ASSIGNED_ROOM},}
+
+    If there is no possible solution it will return the string 'FAILURE'
+    """
     cons = [con_nosametimeplace, con_nosameproftime]
     return make_solution({}, list(pref.keys()), build_domains(pref), cons)
 
