@@ -4,7 +4,7 @@ import copy
 
 def get_solution(pref):
     """
-    This is the function to call, what this whole module is forself.
+    This is the function to call, what this whole module is for.
     It takes a python dictionary representing preferences, which must have
     entries of the following form:
 
