@@ -1,0 +1,11 @@
+{% extends 'base_html.html' %}
+
+{% block content %}
+<div class= "course-detail">
+	<div class = "course">
+		<h2>{{course.title}}</h2>
+		<p>{{course.decription}}</p>
+		<p>{{course.pref_day}} {{course.pref_time}}</p>
+	</div>
+</div>
+{% endblock %}
