@@ -1,0 +1,22 @@
+{% extends 'base_html.html' %}
+
+{% load static from staticfiles %}
+
+{% block content %}
+<head>
+	<meta charset = "utf-8">
+	<title>Course</title>
+	<link rel = "stylesheet" href="{% static 'styles.css' %}">
+		<h1>Courses</h1>
+		<div class = "courses">
+			{% for course in courses %}
+				<div class = "course">
+					<h2><a href = "{% url 'courses:detail' slug=course.slug %}">{{course.title}}</a></h2>
+					<p>{{course.snippet}}</p>
+					<p>{{course.pref_day}}</p>
+					<p>{{course.pref_time}}</p>
+					<p class = "professor">Taught by {{course.professor}}</p>
+				</div>
+			{% endfor %}
+		</div>
+{% endblock %}

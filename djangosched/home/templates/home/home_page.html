@@ -1,0 +1,16 @@
+{% extends 'base_html.html' %}
+
+{% load static from staticfiles %}
+
+{% block content %}
+	<head>
+		<meta charset = "utf-8">
+		<title>Home Page</title>
+		<link rel = "stylesheet" href="{% static 'styles.css' %}">
+	</head>
+	<body>
+		<h1>This is the homepage</h1>
+		<p>Welcome to the scheduler</p>
+	</body>
+
+{% endblock %}
