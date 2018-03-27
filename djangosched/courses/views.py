@@ -4,10 +4,10 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from . import forms
 
-# Create your views here.
 def course_list(request):
 	courses = Course.objects.all().order_by('date')
 	# I think that this is where the algorithm will go into place
+	
 	return render(request, 'courses/course_list.html', {'courses':courses})
 
 def course_details(request, slug):
