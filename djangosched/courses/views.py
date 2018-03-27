@@ -3,14 +3,11 @@ from .models import Course
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from . import forms
-#Needs to import the sched.py and airtime.py files and then call it in course_list
+
 # Create your views here.
 def course_list(request):
-	courses = Course.objects.all()
-	#i think that the arbiter would go right here, it would take in "courses" as the 
-	#parameter and then it would be labeled something would go in the "{'courses':courses}"
-	#slot
-	# courses = get_solution(courses)
+	courses = Course.objects.all().order_by('date')
+	# I think that this is where the algorithm will go into place
 	return render(request, 'courses/course_list.html', {'courses':courses})
 
 def course_details(request, slug):

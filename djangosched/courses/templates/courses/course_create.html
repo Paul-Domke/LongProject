@@ -1,5 +1,12 @@
 {% extends 'base_html.html' %}
+
+{% load static from staticfiles %}
+
 {% block content %}
+<head>
+	<meta charset = "utf-8">
+	<title>Course</title>
+	<link rel = "stylesheet" href="{% static 'styles.css' %}">
 	<div class= "create-course">
 		<h2> Input classes here!</h2>
 		<form class='site-form' action = '{% url "courses:create" %}' method = 'post'>
@@ -8,4 +15,5 @@
 			<input type= "submit" value="Create">
 		</form>
 	</div>
+	<script src="/static/slugify.js"></script>
 {% endblock %}

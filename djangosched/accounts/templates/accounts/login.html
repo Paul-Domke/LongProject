@@ -1,7 +1,12 @@
 {% extends 'base_html.html' %}
 
-{% block content %}
+{% load static from staticfiles %}
 
+{% block content %}
+<head>
+	<meta charset = "utf-8">
+	<title>Course</title>
+	<link rel = "stylesheet" href="{% static 'styles.css' %}">
 	<h1>Log In!</h1>
 	<form class = "site-form" action = "{% url 'accounts:login' %}" method="post">
 		{% csrf_token %}

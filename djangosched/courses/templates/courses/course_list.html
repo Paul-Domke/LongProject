@@ -1,4 +1,5 @@
 {% extends 'base_html.html' %}
+
 {% load static from staticfiles %}
 
 {% block content %}
@@ -14,6 +15,7 @@
 					<p>{{course.snippet}}</p>
 					<p>{{course.pref_day}}</p>
 					<p>{{course.pref_time}}</p>
+					<p class = "professor">Taught by {{course.professor}}</p>
 				</div>
 			{% endfor %}
 		</div>

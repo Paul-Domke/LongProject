@@ -1,11 +1,19 @@
 {% extends 'base_html.html' %}
 
+{% load static from staticfiles %}
+
 {% block content %}
+<head>
+	<meta charset = "utf-8">
+	<title>Course</title>
+	<link rel = "stylesheet" href="{% static 'styles.css' %}">
+</head>
 <div class= "course-detail">
 	<div class = "course">
 		<h2>{{course.title}}</h2>
 		<p>{{course.decription}}</p>
 		<p>{{course.pref_day}} {{course.pref_time}}</p>
+		<p class = "professor">Taught by {{course.professor}}</p>
 	</div>
 </div>
 {% endblock %}
