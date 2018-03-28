@@ -10,7 +10,6 @@ class Course(models.Model):
 	date = models.DateTimeField(auto_now_add = True)
 	pref_day = models.CharField(max_length = 20)
 	professor = models.ForeignKey(User, default = None, on_delete = True)
-	room = models.CharField(max_length = 10)
 
 	def __str__(self):
 		return self.title
