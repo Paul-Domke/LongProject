@@ -12,3 +12,12 @@ UCS_TIME_CHOICES = (
 	("TF12", ("TF12")),
 	("TF45", ("TF45"))
 	)
+
+ROOM_CHOICES = (
+	("HNS 114",("HNS 114")),
+	("HNS 108",("HNS 108")),
+	("HNS 106",("HNS 106")),
+	("HNS E167/168",("HNS E167/168")),
+	("HNS E169",("HNS E169")),
+	("HNS E170",("HNS E170")),
+	)

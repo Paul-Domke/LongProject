@@ -11,7 +11,7 @@ class Course(models.Model):
 	slug = models.SlugField()
 	date = models.DateTimeField(auto_now_add = True)
 	professor = models.ForeignKey(User, default = None, on_delete = True)
-	room = models.CharField(max_length = 10)
+	room = models.CharField(choices = ROOM_CHOICES, max_length = 20)
 
 	def __str__(self):
 		return self.title
