@@ -7,11 +7,15 @@ from courses.choices import *
 class Course(models.Model):
 	title = models.CharField(max_length = 100)
 	decription = models.TextField()
-	ucs_time_date = models.CharField(choices = UCS_TIME_CHOICES, max_length = 10)
+	ucs_time_date1 = models.CharField(choices = UCS_TIME_CHOICES, max_length = 10)
+	ucs_time_date2 = models.CharField(choices = UCS_TIME_CHOICES, max_length = 10)
+	ucs_time_date3 = models.CharField(choices = UCS_TIME_CHOICES, max_length = 10)
 	slug = models.SlugField()
 	date = models.DateTimeField(auto_now_add = True)
 	professor = models.ForeignKey(User, default = None, on_delete = True)
-	room = models.CharField(choices = ROOM_CHOICES, max_length = 20)
+	room1 = models.CharField(choices = ROOM_CHOICES, max_length = 20)
+	room2 = models.CharField(choices = ROOM_CHOICES, max_length = 20)
+	room3 = models.CharField(choices = ROOM_CHOICES, max_length = 20)
 
 	def __str__(self):
 		return self.title

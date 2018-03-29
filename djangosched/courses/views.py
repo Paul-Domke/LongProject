@@ -8,6 +8,7 @@ from . import forms
 def course_list(request):
 	courses = Course.objects.all().order_by('date')
 	# I think that this is where the algorithm will go into place
+	# courses = get_solution(courses)
 	return render(request, 'courses/course_list.html', {'courses':courses})
 
 def course_details(request, slug):
