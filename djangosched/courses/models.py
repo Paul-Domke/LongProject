@@ -16,6 +16,8 @@ class Course(models.Model):
 	room1 = models.CharField(choices = ROOM_CHOICES, max_length = 20)
 	room2 = models.CharField(choices = ROOM_CHOICES, max_length = 20)
 	room3 = models.CharField(choices = ROOM_CHOICES, max_length = 20)
+	assigned_room = models.CharField(max_length = 20)
+	assigned_time = models.CharField(max_length = 100)
 
 	def __str__(self):
 		return self.title
