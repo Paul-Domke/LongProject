@@ -19,6 +19,11 @@
 							<button type="submit">Logout</button>
 						</form>
 					</li>
+					<li>
+						<form class = "course-list" action = "{% url 'courses:list' %}">
+							<button type = "submit">View Courses</button>
+						</form>
+					</li>
 					<li><a href="{% url 'courses:create' %}">New Course</a></li>
 					{% else %}
 					<li><a href = "{% url 'accounts:login' %}">Login</a></li>
