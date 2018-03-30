@@ -5,7 +5,8 @@
 		<title>Home Page</title>
 	</head>
 	<body>
-		<h1>This is the homepage</h1>
-		<p>Welcome to the scheduler</p>
+		{% if user.is_authenticated %}
+		<h1>Welcome, {{course.professor}}</h1>
+		<p>Here are you're classes:</p>
 	</body>
 </html>

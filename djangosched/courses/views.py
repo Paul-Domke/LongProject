@@ -11,7 +11,7 @@ from .sched import *
 def course_list(request):
 	courses = Course.objects.all().order_by('date')
 	# TODO: move this stuff
-	# from here to next comment can be moved somewhere else and needs to be called when a new course is submitted
+	# from here to next comment can be moved somewhere else and needs to be called when  \a new course is
 	# courses = Course.objects.all().order_by('date')
 	d = {}
 	for course in courses:
