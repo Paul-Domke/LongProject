@@ -55,7 +55,7 @@ TF23 = TimePref([TimeSlot(WeekTime(2, 14, 30), WeekTime(2, 15, 50)),
 TF45 = TimePref([TimeSlot(WeekTime(2, 16, 0), WeekTime(2, 17, 20)),
                  TimeSlot(WeekTime(5, 16, 0), WeekTime(5, 17, 20)),])
 
-WSEM = TimePref([TimeSlot(WeekTime(3, 12, 30), WeekTime(3, 3, 20))])
+WSEM = TimePref([TimeSlot(WeekTime(3, 12, 30), WeekTime(3, 15, 20))])
 
 W79 = TimePref([TimeSlot(WeekTime(3, 19, 0), WeekTime(3, 21, 50))])
 

@@ -37,10 +37,12 @@ databases = TimeSlot(WeekTime(1, 10, 0), WeekTime(1, 10, 50))
 raptutorial = TimeSlot(WeekTime(1, 10, 30), WeekTime(1, 11, 50))
 acting2 = TimeSlot(WeekTime(2, 10, 20), WeekTime(2, 11, 10))
 rightafter = TimeSlot(WeekTime(1, 10, 50), WeekTime(1, 11, 0))
+superlongclass = TimeSlot(WeekTime(1, 10, 50), WeekTime(2, 11, 0))
 
 
 def test_TimeSlot_str():
-    assert str(softeng) == 'Monday 10:00 - Monday 10:50'
+    assert str(softeng) == 'Monday 10:00 - 10:50'
+    assert str(superlongclass) == 'Monday 10:50 - Tuesday 11:00'
 
 def test_TimeSlot_init():
     with pytest.raises(Exception):
@@ -73,7 +75,7 @@ def test_TimePref_str():
     tp = TimePref([TimeSlot(WeekTime(1, 10, 0), WeekTime(1, 10, 50)),
                    TimeSlot(WeekTime(3, 10, 0), WeekTime(3, 10, 50)),
                    TimeSlot(WeekTime(5, 10, 0), WeekTime(5, 10, 50)),])
-    assert str(tp) == 'Monday 10:00 - Monday 10:50, Wednesday 10:00 - Wednesday 10:50, Friday 10:00 - Friday 10:50'
+    assert str(tp) == 'Monday 10:00 - 10:50, Wednesday 10:00 - 10:50, Friday 10:00 - 10:50'
 
 def test_TimePref_overlaps():
     tp = TimePref([TimeSlot(WeekTime(1, 10, 0), WeekTime(1, 10, 50)),
