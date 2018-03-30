@@ -9,7 +9,7 @@
 	</head>
 	<body>
 		<header class="wrapper">
-			<h1><a href = "{% url 'home' %}"><img src="{% static 'logo.png' alt='Scheduler' %}"/></a></h1>
+			<h1><a href = "{% url 'home:home-page' %}"><img src="{% static 'logo.png' alt='Scheduler' %}"/></a></h1>
 			<nav>
 				<ul>
 					{% if user.is_authenticated %}
@@ -22,6 +22,11 @@
 					<li>
 						<form class = "course-list" action = "{% url 'courses:list' %}">
 							<button type = "submit">View Courses</button>
+						</form>
+					</li>
+					<li>
+						<form class = "home-page" action = "{% url 'home:home-page' %}">
+							<button type = "submit">Home</button>
 						</form>
 					</li>
 					<li><a href="{% url 'courses:create' %}">New Course</a></li>
