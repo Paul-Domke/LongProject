@@ -14,18 +14,17 @@
 				<ul>
 					{% if user.is_authenticated %}
 					<li>
-						<form class="logout-link" action = "{% url 'accounts:logout' %}" method = "post">
+						<form>
+						<class = "logout" action= "{% url 'accounts:logout' %}" method = "post">
 							{% csrf_token %}
 							<button type="submit">Logout</button>
 						</form>
 					</li>
 					<li>
-						<form class = "course-list" action = "{% url 'courses:list' %}">
-							<button type = "submit">View Courses</button>
-						</form>
+						<a href = "{% url 'courses:list' %}">View Courses</a></li>
 					</li>
 					<li>
-						<form class = "home-page" action = "{% url 'home:home-page' %}">
+						<a href = "{% url 'home:home-page' %}">
 							<button type = "submit">Home</button>
 						</form>
 					</li>
