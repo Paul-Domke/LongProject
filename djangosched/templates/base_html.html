@@ -15,7 +15,7 @@
 					{% if user.is_authenticated %}
 					<li>
 						<form>
-						<class = "logout" action= "{% url 'accounts:logout' %}" method = "post">
+						<class = "logout" action= "{% url 'accounts:logout' %}" method = "post"></class>
 							{% csrf_token %}
 							<button type="submit">Logout</button>
 						</form>
@@ -24,9 +24,7 @@
 						<a href = "{% url 'courses:list' %}">View Courses</a></li>
 					</li>
 					<li>
-						<a href = "{% url 'home:home-page' %}">
-							<button type = "submit">Home</button>
-						</form>
+						<a href = "{% url 'home:home-page' %}">Home</a></li>
 					</li>
 					<li><a href="{% url 'courses:create' %}">New Course</a></li>
 					{% else %}
