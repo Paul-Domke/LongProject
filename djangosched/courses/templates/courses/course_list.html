@@ -13,8 +13,8 @@
 				<div class = "course">
 					<h2><a href = "{% url 'courses:detail' slug=course.slug %}">{{course.title}}</a></h2>
 					<p>{{course.snippet}}</p>
-					<p>{{course.pref_day}}</p>
-					<p>{{course.pref_time}}</p>
+					<p>{{course.assigned_room}}</p>
+					<p>{{course.assigned_time}}</p>
 					<p class = "professor">Taught by {{course.professor}}</p>
 				</div>
 			{% endfor %}

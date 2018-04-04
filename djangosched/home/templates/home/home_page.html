@@ -9,8 +9,14 @@
 		<link rel = "stylesheet" href="{% static 'styles.css' %}">
 	</head>
 	<body>
-		<h1>This is the homepage</h1>
-		<p>Welcome to the scheduler</p>
+	<body>
+		{% if user.is_authenticated %}
+		<h1>Welcome, {{user}}</h1>
+		<p>Here are you're classes:</p>
+		{% else %}
+		<h1>Welcome to the New College Course Scheduler</h1>
+		<p>Please sign up or Login to view or add courses</p>
+		{% endif %}
 	</body>
 
 {% endblock %}

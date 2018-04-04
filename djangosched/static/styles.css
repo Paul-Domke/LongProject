@@ -1,12 +1,12 @@
 body{
 	background-color:#0f1d9b;
 	background-image: url(cats.jpg);
-	background-repeat-y:repeat;
+	background-repeat:round;
 	color:black;
 }
 
 body*{
-	font-family: Ubuntu;
+	font-family: "Courier New", Courier, monospace;
 }
 
 h1, h2, h3, h4, h5{
@@ -40,16 +40,16 @@ nav{
 	justify-self: end;
 }
 
-nav li{
+nav ul {
+  list-style-type: none;
+}
+
+nav li a{
 	background-color:aliceblue;
 	display: inline-block;
 	margin-left: 20px;
-}
-
-nav button{
 	font-family: "Courier New", Courier, monospace;
 	color:black;
-	background: none;
 	cursor: pointer;
 	border: 0;
 	font-size: 1em;

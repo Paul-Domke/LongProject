@@ -2,6 +2,8 @@
 Module for our custom time classes.
 """
 
+weekdays = {0:'Sunday', 1:'Monday', 2:'Tuesday', 3:'Wednesday', 4:'Thursday', 5:'Friday', 6:'Saturday'}
+
 class WeekTime:
     """
     Custom time class, records weekday, hour, and minute. Specifies time
@@ -10,7 +12,6 @@ class WeekTime:
     Hour is integer 0-23
     Minute is integer 0-59
     """
-    weekdays = {0:'Sunday', 1:'Monday', 2:'Tuesday', 3:'Wednesday', 4:'Thursday', 5:'Friday', 6:'Saturday'}
 
     def __init__(self, day, hour, minute):
         """
@@ -40,7 +41,7 @@ class WeekTime:
         m = str(self.minute)
         if self.minute < 10:
             m = '0' + m
-        return self.weekdays[self.day] + " " + str(self.hour) + ":" + m
+        return weekdays[self.day] + " " + str(self.hour) + ":" + m
 
     def compare(self, other):
         """
@@ -123,7 +124,15 @@ class TimeSlot:
 
     def __str__(self):
         """Returns string representation in form 'Weekday Hour:Minute - Weekday Hour:Minute'"""
-        return str(self.start) + " - " + str(self.end)
+        if self.start.day == self.end.day:
+
+            m2 = str(self.end.minute)
+            if self.end.minute < 10:
+                m2 = '0' + m2
+
+            return str(self.start) + ' - ' + str(self.end.hour) + ':' + m2
+
+        return str(self.start) + ' - ' + str(self.end)
 
     def overlaps(self, other):
         """
