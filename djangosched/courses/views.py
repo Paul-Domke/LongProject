@@ -3,8 +3,8 @@ from .models import Course
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from . import forms
-from .ucs import codes
-from .sched import *
+from arbiter.ucs import codes
+from arbiter.sched import get_solution
 
 
 # Create your views here.
@@ -19,14 +19,14 @@ def course_list(request):
 						'room':[course.room1, course.room2, course.room3],
 						'prof':course.professor}
 	solution = get_solution(d)
-	
+
 	for course_id in solution:
 		course = Course.objects.get(id = course_id)
 		course.assigned_room = solution[course_id]['room']
 		course.assigned_time = str(solution[course_id]['time'])
 		course.save()
 	# end of stuff to move
-		
+
 	return render(request, 'courses/course_list.html', {'courses':courses})
 
 def course_details(request, slug):
