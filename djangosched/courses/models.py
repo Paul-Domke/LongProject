@@ -7,6 +7,7 @@ from courses.choices import *
 class Course(models.Model):
 	title = models.CharField(max_length = 100)
 	decription = models.TextField()
+	level = models.CharField(choices = LEVEL_CHOICES, max_length = 20)
 	ucs_time_date1 = models.CharField(choices = UCS_TIME_CHOICES, max_length = 10)
 	ucs_time_date2 = models.CharField(choices = UCS_TIME_CHOICES, max_length = 10)
 	ucs_time_date3 = models.CharField(choices = UCS_TIME_CHOICES, max_length = 10)

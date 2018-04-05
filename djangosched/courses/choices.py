@@ -51,3 +51,8 @@ ROOM_CHOICES = (
 	("COH 120",("COH 120")),
 	("CGR 103",("CGR 103")),
 	)
+
+LEVEL_CHOICES = (("Introductory", ("Introductory")),
+ 				 ("Intermediate", ("Intermediate")),
+				 ("Advanced", ("Advanced")),
+				 )
