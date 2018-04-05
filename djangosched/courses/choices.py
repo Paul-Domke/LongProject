@@ -1,5 +1,5 @@
 UCS_TIME_CHOICES = (
-	("MWF8", ("MWF8")),
+	("MWF8", ("MWF 8:00 - 8:50 AM")),
 	("MWF9", ("MWF9")),
 	("MWF10", ("MWF10")),
 	("MWF11", ("MWF11")),
