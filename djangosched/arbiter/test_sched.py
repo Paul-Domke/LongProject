@@ -5,15 +5,13 @@ import pytest
 example_preferences = {1:{'prof':1,
                          'time':[MWF8, MWF9],
                          'room':['HNE 168'],
-                         'equip': None,
-                         'studentnum':30},
+                         'dept':'CS',
+                         'level': 'Introductory'},
                       2:{'prof':2,
                          'time':[MWF8],
                          'room':['HNE 168'],
-                         'equip': None,
-                         'studentnum':30},}
-
-goodass = {1:{'time':MWF9, 'room':'HNE 168', 'prof':1}, 2:{'time':MWF8, 'room':'HNE 168', 'prof':2}}
+                         'dept':'CS',
+                         'level': 'Introductory'}}
 
 def test_iscomplete():
     a1 = {1:{'time':MWF9, 'room':'HNE 168'}}
@@ -24,21 +22,9 @@ def test_iscomplete():
 
 def test_build_domains():
     d = build_domains(example_preferences)
-    assert d == {1:[{'prof':1, 'room':'HNE 168', 'time':MWF8},
-                    {'prof':1, 'room':'HNE 168', 'time':MWF9}],
-                 2:[{'prof':2, 'room':'HNE 168', 'time':MWF8}]}
-
-def test_con_nosametimeplace():
-    badass = {1:{'time':MWF9, 'room':'HNE 168', 'prof':1}, 2:{'time':MWF9, 'room':'HNE 168', 'prof':2}}
-
-    assert con_nosametimeplace(goodass) == True
-    assert con_nosametimeplace(badass) == False
-
-def test_con_nosameproftime():
-    badass = {1:{'time':MWF8, 'room':'HNE 170', 'prof':2}, 2:{'time':MWF8, 'room':'HNE 168', 'prof':2}}
-
-    assert con_nosameproftime(goodass) == True
-    assert con_nosameproftime(badass) == False
+    assert d == {1:[{'prof':1, 'room':'HNE 168', 'time':MWF8, 'dept':'CS', 'level':'Introductory'},
+                    {'prof':1, 'room':'HNE 168', 'time':MWF9, 'dept':'CS', 'level':'Introductory'}],
+                 2:[{'prof':2, 'room':'HNE 168', 'time':MWF8, 'dept':'CS', 'level':'Introductory'}]}
 
 def test_get_mcv():
     d = build_domains(example_preferences)
