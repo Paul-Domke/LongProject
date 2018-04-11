@@ -20,6 +20,18 @@ def get_solution(pref):
 
     If there is no possible solution it will return the string 'FAILURE'
     """
+    solution = ideal_solution(pref)
+
+    if solution == 'FAILURE':
+        solution = strict_solution(pref)
+
+    return solution
+
+def ideal_solution(pref):
+    cons = [con_nosametimeplace, con_nosameproftime, con_level]
+    return make_solution({}, list(pref.keys()), build_domains(pref), cons)
+
+def strict_solution(pref):
     cons = [con_nosametimeplace, con_nosameproftime]
     return make_solution({}, list(pref.keys()), build_domains(pref), cons)
 
