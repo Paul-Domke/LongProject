@@ -89,7 +89,9 @@ def build_domains(pref):
             for time in pref[course]['time']:
                 domains[course].append({'prof':pref[course]['prof'],
                                         'room':room,
-                                        'time':time})
+                                        'time':time,
+                                        'dept':pref[course]['dept'],
+                                        'level':pref[course]['level']})
     return domains
 
 def get_mcv(domains):
@@ -131,6 +133,20 @@ def con_nosameproftime(assign):
     for val in vals:
         for val2 in vals[i:]:
             if val['prof'] == val2['prof'] and val['time'].overlaps(val2['time']):
+                return False
+        i += 1
+    return True
+
+def con_level(assign):
+    """
+    Takes assignment values and determines if any two courses of same department
+    and level occur at same time
+    """
+    vals = list(assign.values())
+    i = 1
+    for val in vals:
+        for val2 in vals[i:]:
+            if val['dept'] == val2['dept'] and val['level'] == val2['level'] and val['time'].overlaps(val2['time']):
                 return False
         i += 1
     return True
