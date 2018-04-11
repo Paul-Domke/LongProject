@@ -6,13 +6,8 @@ from . import forms
 from arbiter.ucs import codes
 from arbiter.sched import get_solution
 
-
-# Create your views here.
-def course_list(request):
+def apply_algo():
 	courses = Course.objects.all().order_by('date')
-	# TODO: move this stuff
-	# from here to next comment can be moved somewhere else and needs to be called when  \a new course is
-	# courses = Course.objects.all().order_by('date')
 	d = {}
 	for course in courses:
 		d[course.id] = {'time':[codes[course.ucs_time_date1], codes[course.ucs_time_date2], codes[course.ucs_time_date3],],
@@ -20,7 +15,7 @@ def course_list(request):
 						'prof':course.professor,
 						'dept':course.department,
 						'level':course.level}
-						
+
 	solution = get_solution(d)
 
 	for course_id in solution:
@@ -28,7 +23,11 @@ def course_list(request):
 		course.assigned_room = solution[course_id]['room']
 		course.assigned_time = str(solution[course_id]['time'])
 		course.save()
-	# end of stuff to move
+
+
+# Create your views here.
+def course_list(request):
+	courses = Course.objects.all().order_by('date')
 
 	return render(request, 'courses/course_list.html', {'courses':courses})
 
@@ -45,6 +44,7 @@ def course_create(request):
 			instance = form.save(commit=False)
 			instance.professor = request.user
 			instance.save()
+			apply_algo()
 			return redirect('courses:list')
 	else:
 		form = forms.CreateCourse()
