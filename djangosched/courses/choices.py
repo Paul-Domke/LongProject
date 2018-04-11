@@ -52,7 +52,12 @@ ROOM_CHOICES = (
 	("CGR 103",("CGR 103")),
 	)
 
-LEVEL_CHOICES = (("Introductory", ("Introductory")),
- 				 ("Intermediate", ("Intermediate")),
-				 ("Advanced", ("Advanced")),
-				 )
+LEVEL_CHOICES = (
+	("Introductory", ("Introductory")),
+	("Intermediate", ("Intermediate")),
+	("Advanced", ("Advanced")),
+	)
+
+DEPT_CHOICES = (
+	("Computer Science", ("Computer Science")),
+	)

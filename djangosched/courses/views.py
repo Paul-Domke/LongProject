@@ -18,7 +18,9 @@ def course_list(request):
 		d[course.id] = {'time':[codes[course.ucs_time_date1], codes[course.ucs_time_date2], codes[course.ucs_time_date3],],
 						'room':[course.room1, course.room2, course.room3],
 						'prof':course.professor,
+						'dept':course.department,
 						'level':course.level}
+						
 	solution = get_solution(d)
 
 	for course_id in solution:
