@@ -60,4 +60,5 @@ LEVEL_CHOICES = (
 
 DEPT_CHOICES = (
 	("Computer Science", ("Computer Science")),
+	("Anthropology", ("Anthropology")),
 	)
