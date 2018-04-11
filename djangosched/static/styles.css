@@ -156,14 +156,15 @@ a.highlight{
 }
 
 .button {
-    background-color: #4CAF50; /* Green */
-    border: none;
+    background-color: white;
+    border: 2px;
+		border-color: #008CBA
     color: white;
-    padding: 16px 32px;
+    padding: 4px 4px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 12px;
     margin: 4px 2px;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
