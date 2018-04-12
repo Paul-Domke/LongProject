@@ -26,3 +26,42 @@ class Course(models.Model):
 
 	def snippet(self):
 		return self.decription[:50] + '...'
+
+class Professor(models.Model):
+	name = models.CharField(max_length=100)
+	#email = models.CharField(max_length=100)
+	id = models.AutoField(primary_key=True)
+	user = models.ForeignKey(User, default = None, on_delete = True)
+
+	def __str__(self):
+		return self.name
+
+class Courses(models.Model):
+	id = models.AutoField(primary_key=True)
+	title = models.CharField(max_length = 100)
+	decription = models.TextField()
+	department = models.CharField(choices = DEPT_CHOICES, max_length = 30)
+	level = models.CharField(choices = LEVEL_CHOICES, max_length = 20)
+	ucs_time_date1 = models.CharField(choices = UCS_TIME_CHOICES, max_length = 10)
+	ucs_time_date2 = models.CharField(choices = UCS_TIME_CHOICES, max_length = 10)
+	ucs_time_date3 = models.CharField(choices = UCS_TIME_CHOICES, max_length = 10)
+	slug = models.SlugField()
+	date = models.DateTimeField(auto_now_add = True)
+	room1 = models.CharField(choices = ROOM_CHOICES, max_length = 20)
+	room2 = models.CharField(choices = ROOM_CHOICES, max_length = 20)
+	room3 = models.CharField(choices = ROOM_CHOICES, max_length = 20)
+	assigned_room = models.CharField(max_length = 20)
+	assigned_time = models.CharField(max_length = 100)
+
+	def __str__(self):
+		return self.title
+
+	def snippet(self):
+		return self.decription[:50] + '...'
+
+class CourseToProfessor(models.Model):
+	professor = models.ForeignKey(Professor, default = None, on_delete = True)
+	course = models.ForeignKey(Courses, default = None, on_delete = True)
+
+	def __str__(self):
+		return self.professor + " " + self.course
