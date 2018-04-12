@@ -8,6 +8,9 @@
 	<title>Course</title>
 	<link rel = "stylesheet" href="{% static 'styles.css' %}">
 		<h1>Courses</h1>
+		<div>
+			<a href="{% url 'courses:prof' prof=request.user %}" class="button">My Courses</a>
+		</div>
 		<div class = "courses">
 			{% for course in courses %}
 				<div class = "course">

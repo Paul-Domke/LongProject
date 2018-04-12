@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from . import forms
 from arbiter.ucs import codes
 from arbiter.sched import get_solution
+from django.contrib.auth.models import User
 
 def apply_algo():
 	courses = Course.objects.all().order_by('date')
@@ -28,6 +29,11 @@ def apply_algo():
 # Create your views here.
 def course_list(request):
 	courses = Course.objects.all().order_by('date')
+
+	return render(request, 'courses/course_list.html', {'courses':courses})
+
+def prof_course_list(request, prof):
+	courses = Course.objects.filter(professor=User.objects.get(username=prof)).order_by('date')
 
 	return render(request, 'courses/course_list.html', {'courses':courses})
 
