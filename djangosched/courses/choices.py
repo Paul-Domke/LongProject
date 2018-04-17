@@ -1,17 +1,29 @@
 UCS_TIME_CHOICES = (
-	("MWF8", ("MWF 8:00 - 8:50 AM")),
-	("MWF9", ("MWF 9:00 - 9:50 AM")),
+        ("MWF8", ("MWF 8:00 - 8:50 AM")),
+        ("MWF9", ("MWF 9:00 - 9:50 AM")),
 	("MWF10", ("MWF 10:00 - 10:50 AM")),
 	("MWF11", ("MWF 11:00 - 11:50 AM")),
+        ("MLAB", ("Mon Lab/Studio 12:30 - 5:00 PM")),
+        ("MSEM", ("Mon Seminar 2:00 - 4:50 PM")),
 	("MR121", ("MR 12:30 - 1:50 PM")),
 	("MR23", ("MR 2:00 - 3:20 PM")),
 	("MR34", ("MR 3:30 - 4:50 PM")),
 	("MW78", ("MW 7:00 - 8:20 PM")),
+        ("M79", ("Mon 7:00 - 9:50 PM")),
 	("TR910", ("TR 9:00 - 10:20 AM")),
 	("TR1011", ("TR 10:30 - 11:50 AM")),
+        ("TLAB", ("Tues Lab/Studio 1:00 - 5:20 AM")),
+        ("TSEM", ("Tues Seminar 2:30 - 5:20 AM")),
 	("TF12", ("TF 1:00 - 2:20 PM")),
-	("TF45", ("TF 4:00 - 5:20 PM"))
-	)
+        ("TF23", ("TF 2:30 - 3:50 PM")),
+        ("TF45", ("TF 4:00 - 5:20 PM")),
+        ("WSEM", ("Wed 12:30 - 3:20 PM")),
+        ("W79", ("Wed 7:00 - 9:50 PM")),
+        ("RLAB", ("Thurs Lab/Studio 1:00 - 5:20 PM")),
+        ("RSEM", ("Thurs Seminar 2:30 - 5:20 PM")),
+        ("FLAB", ("Fri Lab/Studio 1:00 - 5:20 PM")),
+	("FSEM", ("Fri Seminar 2:30 - 5:20 PM"))
+         )
 
 ROOM_CHOICES = (
 	("HNS 114",("HNS 114")),
