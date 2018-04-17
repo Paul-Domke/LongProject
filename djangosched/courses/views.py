@@ -50,7 +50,6 @@ def course_create(request):
 			instance = form.save(commit=False)
 			instance.professor = request.user
 			instance.save()
-			apply_algo()
 			return redirect('courses:list')
 	else:
 		form = forms.CreateCourse()
