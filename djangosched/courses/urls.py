@@ -8,8 +8,8 @@ app_name = 'courses'
 
 urlpatterns = [
     url(r'^$', views.course_list, name = 'list'),
-    path('<prof>/', views.prof_course_list, name = 'prof'),
     url(r'^create/$', views.course_create, name = 'create'),
+    path('user/<prof>/', views.prof_course_list, name = 'prof'),
     url(r'^(?P<slug>[\w-]+)/$', views.course_details, name = "detail"),
 ]
 
