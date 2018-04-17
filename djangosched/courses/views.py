@@ -31,8 +31,9 @@ def apply_algo(request):
 # Create your views here.
 def course_list(request):
 	courses = Course.objects.all().order_by('date')
+	form = forms.FilterCourseList()
 
-	return render(request, 'courses/course_list.html', {'courses':courses})
+	return render(request, 'courses/course_list.html', {'courses':courses, 'form':form})
 
 def prof_course_list(request, prof):
 	courses = Course.objects.filter(professor=User.objects.get(username=prof)).order_by('date')
