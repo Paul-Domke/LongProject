@@ -29,7 +29,20 @@ def apply_algo():
 # Create your views here.
 def course_list(request):
 	courses = Course.objects.all().order_by('date')
-	form = forms.FilterCourseList()
+	if request.method == "POST":
+		form = forms.FilterCourseList(request.POST, request.FILES)
+		if form.is_valid():
+			if form.cleaned_data.get('instructor'):
+				courses = courses.filter(professor=User.objects.get(username=form.cleaned_data.get('instructor')))
+			if form.cleaned_data.get('dept'):
+				courses = courses.filter(department=form.cleaned_data.get('dept'))
+			if form.cleaned_data.get('time'):
+				courses = courses.filter(assigned_time=str(codes[form.cleaned_data.get('time')]))
+			if form.cleaned_data.get('room'):
+				courses = courses.filter(assigned_room=form.cleaned_data.get('room'))
+	else:
+		form = forms.FilterCourseList()
+
 
 	return render(request, 'courses/course_list.html', {'courses':courses, 'form':form})
 
@@ -37,6 +50,7 @@ def prof_course_list(request, prof):
 	courses = Course.objects.filter(professor=User.objects.get(username=prof)).order_by('date')
 
 	return render(request, 'courses/course_list.html', {'courses':courses})
+
 
 def course_details(request, slug):
 	# return HttpResponse("This is where the description will be")

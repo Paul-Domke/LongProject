@@ -11,4 +11,6 @@ class CreateCourse(forms.ModelForm):
 
 class FilterCourseList(forms.Form):
 	instructor = forms.ModelChoiceField(label='Instructor:', queryset=models.User.objects.all().order_by('username'), required=False)
+	dept = forms.ChoiceField(label='Department:', choices=DEPT_CHOICES, required=False)
 	time = forms.ChoiceField(label='Time:', choices=UCS_TIME_CHOICES, required=False)
+	room = forms.ChoiceField(label='Location:', choices=ROOM_CHOICES, required=False)
