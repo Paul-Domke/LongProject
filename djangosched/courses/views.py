@@ -7,7 +7,7 @@ from arbiter.ucs import codes
 from arbiter.sched import get_solution
 from django.contrib.auth.models import User
 
-def apply_algo():
+def apply_algo(request):
 	courses = Course.objects.all().order_by('date')
 	d = {}
 	for course in courses:
@@ -24,6 +24,8 @@ def apply_algo():
 		course.assigned_room = solution[course_id]['room']
 		course.assigned_time = str(solution[course_id]['time'])
 		course.save()
+
+		return render(request, 'home/home_page.html', {'courses':courses})
 
 
 # Create your views here.
