@@ -20,9 +20,11 @@ def get_solution(pref):
 
     If there is no possible solution it will return the string 'FAILURE'
     """
+    print('ideal_solution')
     solution = ideal_solution(pref)
 
     if solution == 'FAILURE':
+        print('strict_solution')
         solution = strict_solution(pref)
 
     return solution
@@ -44,28 +46,31 @@ def make_solution(assign, variables, domains, constraints):
     # Remove a variable var from variables
     # pick variable using Most Constrained Variable
     var = get_mcv(domains)
-    variables.remove(var)
-    #print('var', var)
+    print('var', var,)
+    newvariables = copy.deepcopy(variables)
+    newvariables.remove(var)
+    #print(variables)
 
 
     # order domain values by Least Constraining Value
     vals = sorted(domains.pop(var), key=lambda val:how_constraining(val, domains))
+    #print('domains', domains)
 
     for value in vals:
         #print('value',value)
         newassign = copy.deepcopy(assign)
         newassign[var] = value
-        #thisisok = False not in [constraint(newassign) for constraint in constraints]
+        thisisok = False not in [constraint(newassign) for constraint in constraints]
         # if var = value is consistent with assign according to the constraints then
-        thisisok = True
+        #thisisok = True
         if thisisok:
             #print('got to 1')
             # Add var = value to assign
-            assign = newassign
+            #assign = newassign
             newdomains = copy.deepcopy(domains)
             # for uvar in variables (i.e., uvar an unassigned variable), uvar − − − var (i.e., uvar a neighbor of var in the constrained graph) do
             #       Remove values for uvar from newdomains[uvar] that are inconsistent with assign
-            for uvar in variables:
+            for uvar in newvariables:
                 #print('got to 2')
                 for uval in newdomains[uvar]:
                     uassign = copy.deepcopy(newassign)
@@ -78,7 +83,7 @@ def make_solution(assign, variables, domains, constraints):
 
             # if for all uvar ∈ variables, uvar − − − var, we have newdomains (uvar ) not empty then
             if [] not in newdomains.values():
-                result = make_solution(newassign, variables, newdomains, constraints)
+                result = make_solution(newassign, newvariables, newdomains, constraints)
                 if result != 'FAILURE':
                     return result
 
