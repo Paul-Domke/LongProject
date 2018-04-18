@@ -19,11 +19,12 @@ def apply_algo(request):
 
 	solution = get_solution(d)
 
-	for course_id in solution:
-		course = Course.objects.get(id = course_id)
-		course.assigned_room = solution[course_id]['room']
-		course.assigned_time = str(solution[course_id]['time'])
-		course.save()
+	if solution != 'FAILURE':
+		for course_id in solution:
+			course = Course.objects.get(id = course_id)
+			course.assigned_room = solution[course_id]['room']
+			course.assigned_time = str(solution[course_id]['time'])
+			course.save()
 
 	return redirect('courses:list')
 
