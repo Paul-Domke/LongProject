@@ -25,7 +25,7 @@ def apply_algo(request):
 		course.assigned_time = str(solution[course_id]['time'])
 		course.save()
 
-		return render(request, 'home/home_page.html', {'courses':courses})
+	return render(request, 'home/home_page.html', {'courses':courses})
 
 
 # Create your views here.
@@ -34,14 +34,18 @@ def course_list(request):
 	if request.method == "POST":
 		form = forms.FilterCourseList(request.POST, request.FILES)
 		if form.is_valid():
-			if form.cleaned_data.get('instructor'):
-				courses = courses.filter(professor=User.objects.get(username=form.cleaned_data.get('instructor')))
-			if form.cleaned_data.get('dept'):
-				courses = courses.filter(department=form.cleaned_data.get('dept'))
-			if form.cleaned_data.get('time'):
-				courses = courses.filter(assigned_time=str(codes[form.cleaned_data.get('time')]))
-			if form.cleaned_data.get('room'):
-				courses = courses.filter(assigned_room=form.cleaned_data.get('room'))
+			instructor = form.cleaned_data.get('instructor')
+			if instructor:
+				courses = courses.filter(professor=User.objects.get(username=instructor))
+			dept = form.cleaned_data.get('dept')
+			if dept:
+				courses = courses.filter(department=dept)
+			time = form.cleaned_data.get('time')
+			if time:
+				courses = courses.filter(assigned_time=str(codes[time]))
+			room = form.cleaned_data.get('room')
+			if room:
+				courses = courses.filter(assigned_room=room)
 	else:
 		form = forms.FilterCourseList()
 
@@ -50,8 +54,9 @@ def course_list(request):
 
 def prof_course_list(request, prof):
 	courses = Course.objects.filter(professor=User.objects.get(username=prof)).order_by('date')
+	form = forms.FilterCourseList()
 
-	return render(request, 'courses/course_list.html', {'courses':courses})
+	return render(request, 'courses/course_list.html', {'courses':courses, 'form':form})
 
 
 def course_details(request, slug):
