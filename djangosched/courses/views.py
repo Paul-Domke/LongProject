@@ -25,7 +25,7 @@ def apply_algo(request):
 		course.assigned_time = str(solution[course_id]['time'])
 		course.save()
 
-		return render(request, 'home/home_page.html', {'courses':courses})
+	return redirect('courses:list')
 
 
 # Create your views here.
