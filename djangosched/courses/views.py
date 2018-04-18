@@ -25,6 +25,8 @@ def apply_algo(request):
 			course.assigned_room = solution[course_id]['room']
 			course.assigned_time = str(solution[course_id]['time'])
 			course.save()
+	else:
+		print('Arbiter Failed')
 
 	return redirect('courses:list')
 
