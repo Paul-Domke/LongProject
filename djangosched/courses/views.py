@@ -12,8 +12,8 @@ def apply_algo(request):
 	courses = Course.objects.all().order_by('date')
 	d = {}
 	for course in courses:
-		d[course.id] = {'time':[codes[course.ucs_time_date1], codes[course.ucs_time_date2], codes[course.ucs_time_date3],],
-						'room':[course.room1, course.room2, course.room3],
+		d[course.id] = {'time':set([codes[course.ucs_time_date1], codes[course.ucs_time_date2], codes[course.ucs_time_date3],]),
+						'room':set([course.room1, course.room2, course.room3]),
 						'prof':course.professor,
 						'dept':course.department,
 						'level':course.level}
