@@ -6,6 +6,7 @@ from . import forms
 from arbiter.ucs import codes
 from arbiter.sched import get_solution
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
 
 def apply_algo(request):
 	courses = Course.objects.all().order_by('date')
@@ -74,6 +75,7 @@ def course_create(request):
 		if form.is_valid():
 			instance = form.save(commit=False)
 			instance.professor = request.user
+			instance.slug = slugify(request.POST.get("title", ""))
 			instance.save()
 			return redirect('courses:list')
 	else:
