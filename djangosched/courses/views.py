@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Course
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from . import forms
-from arbiter.ucs import codes
-from arbiter.sched import get_solution
+from .ucs import codes
+from .sched import get_solution
 
 
 # Create your views here.
@@ -46,3 +46,4 @@ def course_create(request):
 	else:
 		form = forms.CreateCourse()
 	return render(request, 'courses/course_create.html', {'form':form})
+

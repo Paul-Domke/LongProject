@@ -5,10 +5,10 @@
 {% block content %}
 <head>
 	<meta charset = "utf-8">
-	<title>Course</title>
+	<title>New Course</title>
 	<link rel = "stylesheet" href="{% static 'styles.css' %}">
 	<div class= "create-course">
-		<h2> Input classes here!</h2>
+		<h2> Create Class Here!</h2>
 		<form class='site-form' action = '{% url "courses:create" %}' method = 'post'>
 			{% csrf_token %}
 			{{ form }}
