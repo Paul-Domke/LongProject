@@ -11,7 +11,7 @@
 
 	<body>
 		<header class="wrapper">
-			<a href = "{% url 'home:home-page' %}"><img src="{% static 'logo.png' alt='Scheduler' %}"/></a>
+			<a href = "{% url 'home:home-page' %}" title="Home" style="width:42px;height:42px;border:0;"><img src="{% static 'logo.png' alt='Scheduler' %}"/></a>
 			<nav>
 				<ul>
 					{% if user.is_superuser %}
