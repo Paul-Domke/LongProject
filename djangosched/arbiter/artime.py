@@ -102,6 +102,9 @@ class WeekTime:
 
         return WeekTime(newday, newhour, newmin)
 
+    def toord(self):
+        return self.day * 24 * 60 + self.hour * 60 + self.minute
+
 class TimeSlot:
     """
     Represents a single continuous time slot, with a start WeekTime and an
@@ -159,6 +162,9 @@ class TimeSlot:
     def equals(self, other):
         return self.start.compare(other.start) == 0 and self.end.compare(other.end) == 0
 
+    def toord(self):
+        return self.start.toord()
+
 class TimePref:
     """
     A set of timeslots that represent a full scheduling of a course over multiple weekdays
@@ -204,3 +210,6 @@ class TimePref:
             if True not in [urslot.equals(myslot) for myslot in self.slots]:
                 return False
         return True
+
+    def toord(self):
+        return self.slots[0].toord()
