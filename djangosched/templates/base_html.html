@@ -1,47 +1,50 @@
 {% load static from staticfiles %}
 <!DOCTYPE html>
-
 <html>
-
 	<head>
 		<meta charset = "utf-8">
 		<title>Scheduler</title>
 		<link ref = "stylesheet" href = "{% static 'styles.css' %}">
 	</head>
-
+    
 	<body>
 		<header class="wrapper">
-			<a href = "{% url 'home:home-page' %}" title="Home" style="width:42px;height:42px;border:0;"><img src="{% static 'logo.png' alt='Scheduler' %}"/></a>
-			<nav>
-				<ul>
-					{% if user.is_superuser %}
-					<li><form class = "logout" action= "{% url 'accounts:logout' %}" method = "post">
-							{% csrf_token %}
-					<button type="submit" class="button" value="Logout">Logout</button></form> </li>
-					<li><a href = "{% url 'courses:list' %}" class="button">View Courses</a></li>
-					<li><a href = "{% url 'home:home-page' %}" class="button">Home</a></li>
-					<li><a href="{% url 'courses:create' %}" class="button">New Course</a></li>
-					<li><a href = "{% url 'admin:index' %}" class="button">Admin Page</a></li>
-					<li><a href = "{% url 'courses:apply_algo' %}" class="button">Create Schedule</a></li>
-					{% endif %}
+			<a href = "{% url 'home:home-page' %}" title="Home"><img src="{% static 'NewCollegeSmall.png' alt='Scheduler' %}"/></a>
+            
+            {% if user.is_superuser %}
+                <nav>
+                    <a href = "{% url 'home:home-page' %}" class="button">Home</a>
+                    <a href = "{% url 'courses:list' %}" class="button">View Courses</a>
+                    <a href="{% url 'courses:prof' prof=request.user %}" class="button">My Courses</a>
+                    <a href="{% url 'courses:create' %}" class="button">New Course</a>
+                    <a href = "{% url 'admin:index' %}" class="button">Admin Page</a>
+                    <a href = "{% url 'courses:apply_algo' %}" class="button">Run Algo</a>
+                    <form class = "logout" action= "{% url 'accounts:logout' %}" method = "post">
+                    {% csrf_token %}
+                    <button type="submit" class="button" value="Logout">Logout</button></form>
+                </nav>
+            {% endif %}
 
-					{% if user.is_authenticated and not user.is_superuser%}
-					<li><form class = "logout" action= "{% url 'accounts:logout' %}" method = "post">
-							{% csrf_token %}
-							<button type="submit" class="button" value="Logout">Logout</button></form></li>
-					<li><a href = "{% url 'courses:list' %}" class="button">View Courses</a></li>
-					<li><a href = "{% url 'home:home-page' %}" class="button">Home</a></li>
-					<li><a href="{% url 'courses:create' %}" class="button">New Course</a></li>
-					{% endif %}
+            {% if user.is_authenticated and not user.is_superuser%}
+                <nav>
+                    <a href = "{% url 'home:home-page' %}" class="button">Home</a>
+                    <a href = "{% url 'courses:list' %}" class="button">View Courses</a>
+                    <a href="{% url 'courses:prof' prof=request.user %}" class="button">My Courses</a>
+                    <a href="{% url 'courses:create' %}" class="button">New Course</a>
+                    <form class = "logout" action= "{% url 'accounts:logout' %}" method = "post">
+                    {% csrf_token %}
+                    <button type="submit" class="button" value="Logout">Logout</button></form>
+                </nav>
+            {% endif %}
 
-					{% if not user.is_authenticated %}
-					<li><a href = "{% url 'accounts:login' %}" class="button">Login</a></li>
-					<li><a href = "{% url 'accounts:signup' %}" class="button">Signup</a></li>
-					{% endif %}
-				</ul>
-			</nav>
+            {% if not user.is_authenticated %}
+                <nav>
+                   <a href = "{% url 'accounts:login' %}" class="button">Login</a>
+                   <a href = "{% url 'accounts:signup' %}" class="button">Signup</a>
+                </nav>
+            {% endif %}
 		</header>
-
+        
 		<div class = "wrapper">
 			{%block content%}
 			{%endblock%}

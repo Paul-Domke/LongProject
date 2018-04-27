@@ -8,8 +8,7 @@
 	<title>Course</title>
 	<link rel = "stylesheet" href="{% static 'styles.css' %}">
 		<h1>Courses</h1>
-		<div>
-			<a href="{% url 'courses:prof' prof=request.user %}" class="button">My Courses</a>
+		<div class = searchForm>
 			<form action= '{% url "courses:list" %}' method=post>
 				{% csrf_token %}
 				{{ form }}

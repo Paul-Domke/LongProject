@@ -8,7 +8,6 @@
 	<title>Course</title>
 	<link rel = "stylesheet" href="{% static 'styles.css' %}">
 	<div class= "create-course">
-		<h2> Input classes here!</h2>
 		<form class='site-form' action = '{% url "courses:create" %}' method = 'post'>
 			{% csrf_token %}
 			{{ form }}
