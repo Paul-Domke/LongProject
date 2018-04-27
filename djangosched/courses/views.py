@@ -42,7 +42,7 @@ def translate_back(s):
 # Create your views here.
 def course_list(request):
 	courses = Course.objects.all()
-	sorted(courses, key=lambda course:translate_back(course.assigned_time).toord())
+	courses = sorted(courses, key=lambda course:translate_back(course.assigned_time).toord())
 	if request.method == "POST":
 		form = forms.FilterCourseList(request.POST, request.FILES)
 		if form.is_valid():
@@ -66,7 +66,7 @@ def course_list(request):
 
 def prof_course_list(request, prof):
 	courses = Course.objects.filter(professor=User.objects.get(username=prof))
-	sorted(courses, key=lambda course:translate_back(course.assigned_time).toord())
+	courses = sorted(courses, key=lambda course:translate_back(course.assigned_time).toord())
 	form = forms.FilterCourseList()
 
 	return render(request, 'courses/course_list.html', {'courses':courses, 'form':form})
