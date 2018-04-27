@@ -36,6 +36,7 @@ def translate_back(s):
 	for code in codes:
 		if str(codes[code]) == s:
 			return codes[code]
+	return TimePref([TimeSlot(WeekTime(0,0,0), WeekTime(0,0,0))])
 
 # Create your views here.
 def course_list(request):
