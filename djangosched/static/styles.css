@@ -61,6 +61,7 @@ header{
 nav{
     width: 100%;
     display: inline;
+    text-align: center;
 }
 
 .courses {
