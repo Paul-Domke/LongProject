@@ -20,6 +20,7 @@ class Course(models.Model):
 	room3 = models.CharField(choices = ROOM_CHOICES, max_length = 20)
 	assigned_room = models.CharField(max_length = 20)
 	assigned_time = models.CharField(max_length = 100)
+	has_conflict = models.BooleanField(default = False)
 
 	def __str__(self):
 		return self.title

@@ -1,6 +1,8 @@
 from .artime import *
 import copy
 from .cons import *
+import random
+import math
 
 
 def get_solution(pref):
@@ -20,10 +22,13 @@ def get_solution(pref):
 
     If there is no possible solution it will return the string 'FAILURE'
     """
+    """
     solution = ideal_solution(pref)
 
     if solution == 'FAILURE':
         solution = strict_solution(pref)
+    """
+    solution = get_annealed(pref)
 
     return solution
 
@@ -71,7 +76,7 @@ def make_solution(assign, variables, domains, constraints):
                     uassign = copy.deepcopy(newassign)
                     uassign[uvar] = uval
                     #print(uvar, uval, [constraint(uassign) for constraint in constraints])
-                    if False in [constraint(uassign) for constraint in constraints]:
+                    if sum([constraint(uassign) for constraint in constraints]) > 0:
                         #print('got to 3')
                         newdomains[uvar].remove(uval)
                         #print(newdomains)
@@ -86,6 +91,83 @@ def make_solution(assign, variables, domains, constraints):
 
     return 'FAILURE'
 
+def get_annealed(pref):
+    """
+    Sets up annealer by making a random solution and then passing parameters
+    to anneal_solution
+    """
+    cons = [con_nosametimeplace, con_nosameproftime, con_level]
+    rand_sol = random_solution({}, list(pref.keys()), build_domains(pref))
+    return anneal_solution(rand_sol, list(pref.keys()), build_domains(pref), cons)
+
+def random_solution(assign, variables, domains):
+    """
+    Creates a fully random solution by assigning each variable a random value
+    from its domain
+    """
+    for variable in variables:
+        assign[variable] = random.choice(domains[variable])
+    return assign
+
+def acceptance_probability(old_cost, new_cost, T):
+    """
+    Calculates the acceptance_probability of the annealing algorithm as a
+    function of e^((old_cost-new_cost)/Temperature)
+    """
+    return math.e ** ((old_cost-new_cost)/T)
+
+def get_neighbor(solution, variables, domains):
+    """
+    Finds a neighboring solution by picking a varible at random and changing
+    its assignment to a random different value in its domain.
+    """
+    var = random.choice(variables)
+    #print(var, var)
+    dom = domains[var]
+    #print(domains[var] == dom)
+    #print(solution[var])
+    #print(dom)
+    if len(dom)>1:
+        dom.remove(solution[var])
+    neighbor = dict(solution)
+    neighbor[var] = random.choice(dom)
+    dom.append(solution[var])
+    return neighbor
+
+def anneal_solution(solution, variables, domains, constraints):
+    "Uses simulated annealing to make the best possible solution"
+    old_cost = sum([constraint(solution) for constraint in constraints])
+    T = 1.0
+    T_min = 0.00001
+    alpha = 0.9
+    while T > T_min:
+        i = 1
+        while i <= 100:
+            new_sol = get_neighbor(solution, variables, domains)
+            new_cost = sum([constraint(new_sol) for constraint in constraints])
+            ap = acceptance_probability(old_cost, new_cost, T)
+            if ap > random.random():
+                solution = new_sol
+                old_cost = new_cost
+            i += 1
+        T = T*alpha
+    mark_conflicts(solution, constraints)
+    return solution
+
+def mark_conflicts(assign, constraints):
+    """
+    Marks variables not fitting constraints
+    """
+    vals = list(assign.values())
+    i = 1
+    for val in vals:
+        for val2 in vals[i:]:
+            if val['prof'] == val2['prof'] and val['time'].overlaps(val2['time']):
+                val['conflict'] = True
+                val2['conflict'] = True
+        i += 1
+
+
 def iscomplete(assign, variables):
     """
     Determines whether assignment is a complete assignment. Returns bool.
@@ -96,6 +178,12 @@ def iscomplete(assign, variables):
     return True
 
 def build_domains(pref):
+    """
+    Given a set of course preferences, generates complete domains of every
+    varible. Here variables are courses and each domain is a combination of a
+    specific time and course. Size of each domain is therefore
+    # of possible rooms * # of possible times
+    """
     domains = {course:[] for course in pref}
     for course in pref:
         for room in pref[course]['room']:
@@ -104,7 +192,8 @@ def build_domains(pref):
                                         'room':room,
                                         'time':time,
                                         'dept':pref[course]['dept'],
-                                        'level':pref[course]['level']})
+                                        'level':pref[course]['level'],
+                                        'conflict':False})
     return domains
 
 def get_mcv(domains):

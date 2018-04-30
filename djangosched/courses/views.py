@@ -26,6 +26,7 @@ def apply_algo(request):
 			course = Course.objects.get(id = course_id)
 			course.assigned_room = solution[course_id]['room']
 			course.assigned_time = str(solution[course_id]['time'])
+			course.has_conflict = solution[course_id]['conflict']
 			course.save()
 	else:
 		print('Arbiter Failed')
