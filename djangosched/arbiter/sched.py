@@ -138,7 +138,19 @@ def anneal_solution(solution, variables, domains, constraints):
                 old_cost = new_cost
             i += 1
         T = T*alpha
+    mark_conflicts(solution, constraints)
     return solution
+
+def mark_conflicts(assign, constraints):
+    vals = list(assign.values())
+    i = 1
+    for val in vals:
+        for val2 in vals[i:]:
+            if val['prof'] == val2['prof'] and val['time'].overlaps(val2['time']):
+                val['conflict'] = True
+                val2['conflict'] = True
+        i += 1
+
 
 def iscomplete(assign, variables):
     """
@@ -158,7 +170,8 @@ def build_domains(pref):
                                         'room':room,
                                         'time':time,
                                         'dept':pref[course]['dept'],
-                                        'level':pref[course]['level']})
+                                        'level':pref[course]['level'],
+                                        'conflict':False})
     return domains
 
 def get_mcv(domains):
