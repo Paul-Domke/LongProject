@@ -1,6 +1,8 @@
 from .artime import *
 import copy
 from .cons import *
+import random
+import math
 
 
 def get_solution(pref):
@@ -20,10 +22,13 @@ def get_solution(pref):
 
     If there is no possible solution it will return the string 'FAILURE'
     """
+    """
     solution = ideal_solution(pref)
 
     if solution == 'FAILURE':
         solution = strict_solution(pref)
+    """
+    solution = get_annealed(pref)
 
     return solution
 
@@ -71,7 +76,7 @@ def make_solution(assign, variables, domains, constraints):
                     uassign = copy.deepcopy(newassign)
                     uassign[uvar] = uval
                     #print(uvar, uval, [constraint(uassign) for constraint in constraints])
-                    if False in [constraint(uassign) for constraint in constraints]:
+                    if sum([constraint(uassign) for constraint in constraints]) > 0:
                         #print('got to 3')
                         newdomains[uvar].remove(uval)
                         #print(newdomains)
@@ -85,6 +90,54 @@ def make_solution(assign, variables, domains, constraints):
             #Remove var = value from assign
 
     return 'FAILURE'
+
+def get_annealed(pref):
+    """
+    Sets up annealer by making a random solution and then passing parameters
+    to anneal_solution
+    """
+    cons = [con_nosametimeplace, con_nosameproftime, con_level]
+    rand_sol = random_solution({}, list(pref.keys()), build_domains(pref))
+    return anneal_solution(rand_sol, list(pref.keys()), build_domains(pref), cons)
+
+def random_solution(assign, variables, domains):
+    for variable in variables:
+        assign[variable] = random.choice(domains[variable])
+    return assign
+
+def acceptance_probability(old_cost, new_cost, T):
+    return math.e ** ((old_cost-new_cost)/T)
+
+def get_neighbor(solution, variables, domains):
+    var = random.choice(variables)
+    #print(var, var)
+    dom = domains[var]
+    #print(domains[var] == dom)
+    #print(solution[var])
+    #print(dom)
+    dom.remove(solution[var])
+    neighbor = dict(solution)
+    neighbor[var] = random.choice(dom)
+    dom.append(solution[var])
+    return neighbor
+
+def anneal_solution(solution, variables, domains, constraints):
+    old_cost = sum([constraint(solution) for constraint in constraints])
+    T = 1.0
+    T_min = 0.00001
+    alpha = 0.9
+    while T > T_min:
+        i = 1
+        while i <= 100:
+            new_sol = get_neighbor(solution, variables, domains)
+            new_cost = sum([constraint(new_sol) for constraint in constraints])
+            ap = acceptance_probability(old_cost, new_cost, T)
+            if ap > random.random():
+                solution = new_sol
+                old_cost = new_cost
+            i += 1
+        T = T*alpha
+    return solution
 
 def iscomplete(assign, variables):
     """
