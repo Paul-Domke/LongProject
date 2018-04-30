@@ -101,14 +101,26 @@ def get_annealed(pref):
     return anneal_solution(rand_sol, list(pref.keys()), build_domains(pref), cons)
 
 def random_solution(assign, variables, domains):
+    """
+    Creates a fully random solution by assigning each variable a random value
+    from its domain
+    """
     for variable in variables:
         assign[variable] = random.choice(domains[variable])
     return assign
 
 def acceptance_probability(old_cost, new_cost, T):
+    """
+    Calculates the acceptance_probability of the annealing algorithm as a
+    function of e^((old_cost-new_cost)/Temperature)
+    """
     return math.e ** ((old_cost-new_cost)/T)
 
 def get_neighbor(solution, variables, domains):
+    """
+    Finds a neighboring solution by picking a varible at random and changing
+    its assignment to a random different value in its domain.
+    """
     var = random.choice(variables)
     #print(var, var)
     dom = domains[var]
@@ -123,6 +135,7 @@ def get_neighbor(solution, variables, domains):
     return neighbor
 
 def anneal_solution(solution, variables, domains, constraints):
+    "Uses simulated annealing to make the best possible solution"
     old_cost = sum([constraint(solution) for constraint in constraints])
     T = 1.0
     T_min = 0.00001
@@ -142,6 +155,9 @@ def anneal_solution(solution, variables, domains, constraints):
     return solution
 
 def mark_conflicts(assign, constraints):
+    """
+    Marks variables not fitting constraints
+    """
     vals = list(assign.values())
     i = 1
     for val in vals:
@@ -162,6 +178,12 @@ def iscomplete(assign, variables):
     return True
 
 def build_domains(pref):
+    """
+    Given a set of course preferences, generates complete domains of every
+    varible. Here variables are courses and each domain is a combination of a
+    specific time and course. Size of each domain is therefore
+    # of possible rooms * # of possible times
+    """
     domains = {course:[] for course in pref}
     for course in pref:
         for room in pref[course]['room']:
