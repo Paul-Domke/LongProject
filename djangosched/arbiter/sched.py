@@ -115,7 +115,8 @@ def get_neighbor(solution, variables, domains):
     #print(domains[var] == dom)
     #print(solution[var])
     #print(dom)
-    dom.remove(solution[var])
+    if len(dom) > 1:
+        dom.remove(solution[var])
     neighbor = dict(solution)
     neighbor[var] = random.choice(dom)
     dom.append(solution[var])
