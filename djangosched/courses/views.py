@@ -8,6 +8,7 @@ from arbiter.sched import get_solution
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from arbiter.artime import *
+from .forms import CreateCourse
 
 def apply_algo(request):
 	courses = Course.objects.all().order_by('date')
@@ -91,3 +92,19 @@ def course_create(request):
 	else:
 		form = forms.CreateCourse()
 	return render(request, 'courses/course_create.html', {'form':form})
+
+@login_required(login_url = "/accounts/login/")
+def edit_course(request, slug):
+	course = Course.objects.get(slug=slug)
+	if request.method == "POST":
+		form = forms.CreateCourse(request.POST, instance=course, professor = request.user)
+		if form.is_valid():
+			course = form.save()
+	else:
+		form = forms.CreateCourse(instance = course)
+
+	context = {
+		'form':form,
+		'course':course
+	}
+	return render(request, 'edit_course.html', context)
