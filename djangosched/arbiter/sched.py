@@ -162,9 +162,19 @@ def mark_conflicts(assign, constraints):
     i = 1
     for val in vals:
         for val2 in vals[i:]:
-            if val['prof'] == val2['prof'] and val['time'].overlaps(val2['time']):
+            if (val['prof'] == val2['prof'] or val['room'] == val2['room']) and val['time'].overlaps(val2['time']):
                 val['conflict'] = True
                 val2['conflict'] = True
+
+                if val['enemies'] == "":
+                    val['enemies'] += val2['name']
+                else:
+                    val['enemies'] += ", "+val2['name']
+
+                if val2['enemies'] == "":
+                    val2['enemies'] += val['name']
+                else:
+                    val2['enemies'] += ", "+val['name']
         i += 1
 
 
@@ -188,12 +198,14 @@ def build_domains(pref):
     for course in pref:
         for room in pref[course]['room']:
             for time in pref[course]['time']:
-                domains[course].append({'prof':pref[course]['prof'],
+                domains[course].append({'name':pref[course]['name'],
+                                        'prof':pref[course]['prof'],
                                         'room':room,
                                         'time':time,
                                         'dept':pref[course]['dept'],
                                         'level':pref[course]['level'],
-                                        'conflict':False})
+                                        'conflict':False,
+                                        'enemies':''})
     return domains
 
 def get_mcv(domains):

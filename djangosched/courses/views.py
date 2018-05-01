@@ -17,7 +17,8 @@ def apply_algo(request):
 						'room':set([course.room1, course.room2, course.room3]),
 						'prof':course.professor,
 						'dept':course.department,
-						'level':course.level}
+						'level':course.level,
+						'name':course.title}
 
 	solution = get_solution(d)
 
@@ -27,6 +28,7 @@ def apply_algo(request):
 			course.assigned_room = solution[course_id]['room']
 			course.assigned_time = str(solution[course_id]['time'])
 			course.has_conflict = solution[course_id]['conflict']
+			course.enemies = solution[course_id]['enemies']
 			course.save()
 	else:
 		print('Arbiter Failed')
