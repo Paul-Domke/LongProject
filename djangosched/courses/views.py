@@ -107,4 +107,4 @@ def edit_course(request, slug):
 		'form':form,
 		'course':course
 	}
-	return render(request, 'edit_course.html', context)
+	return render(request, 'courses/edit_course.html', context)
