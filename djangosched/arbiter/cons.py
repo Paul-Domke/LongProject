@@ -6,6 +6,8 @@ def con_nosametimeplace(assign):
     i = 1
     for val in vals:
         for val2 in vals[i:]:
+            if not val2['time'].equals(val['time']):
+                break
             if val['room'] == val2['room'] and val['time'].overlaps(val2['time']):
                 result += 100
         i += 1
@@ -19,6 +21,8 @@ def con_nosameproftime(assign):
     i = 1
     for val in vals:
         for val2 in vals[i:]:
+            if not val2['time'].equals(val['time']):
+                break
             if val['prof'] == val2['prof'] and val['time'].overlaps(val2['time']):
                 result += 100
         i += 1
@@ -34,6 +38,8 @@ def con_level(assign):
     i = 1
     for val in vals:
         for val2 in vals[i:]:
+            if not val2['time'].equals(val['time']):
+                break
             if val['dept'] == val2['dept'] and val['level'] == val2['level'] and val['time'].overlaps(val2['time']):
                 result += 10
         i += 1
