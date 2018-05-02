@@ -172,12 +172,12 @@ def mark_conflicts(assign, constraints):
                 if val['enemies'] == "":
                     val['enemies'] += val2['name']
                 else:
-                    val['enemies'] += ", "+val2['name']
+                    val['enemies'] += "<br>"+val2['name']
 
                 if val2['enemies'] == "":
                     val2['enemies'] += val['name']
                 else:
-                    val2['enemies'] += ", "+val['name']
+                    val2['enemies'] += "<br>"+val['name']
         i += 1
 
 
