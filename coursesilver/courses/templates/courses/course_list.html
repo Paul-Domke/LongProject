@@ -1,0 +1,33 @@
+{% extends 'base_html.html' %}
+
+{% load static from staticfiles %}
+
+{% block content %}
+<head>
+	<meta charset = "utf-8">
+	<title>Course</title>
+	<link rel = "stylesheet" href="{% static 'styles.css' %}">
+		<h1>Courses</h1>
+		<div class = searchForm>
+			<form action= '{% url "courses:list" %}' method=post>
+				{% csrf_token %}
+				{{ form }}
+				<input type='submit' value = 'Filter' class="button">
+			</form>
+		</div>
+		<div class = "courses">
+			{% for course in courses %}
+				<div class = "course">
+					{% if not course.has_conflict %}
+						<h2><a href = "{% url 'courses:detail' slug=course.slug %}">{{course.title}}</a></h2>
+					{% else %}
+						<h2><a href = "{% url 'courses:detail' slug=course.slug %}" style ="color: red">*{{course.title}}*</a></h2>
+					{% endif %}
+					<p>{{course.snippet}}</p>
+					<p>{{course.assigned_room}}</p>
+					<p>{{course.assigned_time}}</p>
+					<p class = "professor">Taught by {{course.professor}}</p>
+				</div>
+			{% endfor %}
+		</div>
+{% endblock %}

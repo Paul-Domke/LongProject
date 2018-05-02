@@ -1,0 +1,30 @@
+{% extends 'base_html.html' %}
+
+{% load static from staticfiles %}
+
+{% block content %}
+<head>
+	<meta charset = "utf-8">
+	<title>Course</title>
+	<link rel = "stylesheet" href="{% static 'styles.css' %}">
+	{% if user.is_superuser or user == course.professor %}
+		<td><a href="{% url 'courses:edit_course' slug=course.slug %}"><button type="button" class="btn btn-warning">Edit</button></a></td>
+	{% endif %}
+</head>
+<div class= "course-detail">
+	<div class = "course">
+		{% if not course.has_conflict %}
+			<h2>{{course.title}}</h2>
+		{% else %}
+			<h2 style="color: red">*{{course.title}}*</h2>
+		{% endif %}
+		<p>{{course.decription}}</p>
+		<p>{{course.assigned_time}}</p>
+		<p>{{course.assigned_room}}</p>
+		<p class = "professor">Taught by {{course.professor}}</p>
+		{% if course.enemies != "" %}
+			<p style="color: red">This course conflicts with:<br>{{course.enemies |safe}}</p>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}
