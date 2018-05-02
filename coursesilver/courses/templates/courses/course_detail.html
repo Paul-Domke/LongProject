@@ -19,8 +19,9 @@
 			<h2 style="color: red">*{{course.title}}*</h2>
 		{% endif %}
 		<p>{{course.decription}}</p>
-		<p>{{course.assigned_time}}</p>
-		<p>{{course.assigned_room}}</p>
+		<p>{{course.prerequisite}}</p>
+		<p>{{course.assigned_time}}</p><p>{{course.assigned_room}}</p>
+		<p>{{course.term_length}}</p><p>{{course.cap}}</p>
 		<p class = "professor">Taught by {{course.professor}}</p>
 		{% if course.enemies != "" %}
 			<p style="color: red">This course conflicts with:<br>{{course.enemies |safe}}</p>

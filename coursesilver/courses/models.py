@@ -15,7 +15,6 @@ class Course(models.Model):
 	ucs_time_date3 = models.CharField(choices = UCS_TIME_CHOICES, max_length = 10)
 	slug = models.SlugField()
 	date = models.DateTimeField(auto_now_add = True)
-	Class_Size = models.IntegerField()
 	professor = models.ForeignKey(User, default = None, on_delete = True)
 	room1 = models.CharField(choices = ROOM_CHOICES, max_length = 20)
 	room2 = models.CharField(choices = ROOM_CHOICES, max_length = 20)
@@ -24,6 +23,9 @@ class Course(models.Model):
 	assigned_time = models.CharField(max_length = 100)
 	has_conflict = models.BooleanField(default = False)
 	enemies = models.CharField(max_length = 3000, default = "")
+	cap = models.CharField(max_length = 50)
+	prerequisite = models.CharField(max_length = 300)
+	term_length = models.CharField(choices = TERM_CHOICES, max_length = 30)
 
 	def __str__(self):
 		return self.title
