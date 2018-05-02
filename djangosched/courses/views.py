@@ -98,11 +98,14 @@ def course_create(request):
 @login_required(login_url = "/accounts/login/")
 def edit_course(request, slug):
 	course = Course.objects.get(slug=slug)
+
+	if request.user != course.professor and not request.user.is_superuser:
+		return redirect('courses:detail', slug=course.slug)
+
 	if request.method == "POST":
 		form = forms.CreateCourse(request.POST, instance=course)
 		if form.is_valid():
 			course = form.save(commit=False)
-			course.professor = request.user
 			course.slug = slugify(request.POST.get("title", ""))
 			course.save()
 			return redirect('courses:detail', slug=course.slug)

@@ -7,7 +7,9 @@
 	<meta charset = "utf-8">
 	<title>Course</title>
 	<link rel = "stylesheet" href="{% static 'styles.css' %}">
-	<td><a href="{% url 'courses:edit_course' slug=course.slug %}"><button type="button" class="btn btn-warning">Edit</button></a></td>
+	{% if user.is_superuser or user == course.professor %}
+		<td><a href="{% url 'courses:edit_course' slug=course.slug %}"><button type="button" class="btn btn-warning">Edit</button></a></td>
+	{% endif %}
 </head>
 <div class= "course-detail">
 	<div class = "course">
