@@ -10,18 +10,37 @@
 	</head>
 
 	<body>
-        
+
 		{% if user.is_authenticated %}
-        
+
 		<h1>Welcome, {{user}}</h1>
-		<p>I hope that you have a day!</p>
-        
+
+		<p>Here are your classes:</p>
+
+		<div class = "courses">
+			{% for course in courses %}
+				{% if course.professor == user %}
+				<div class = "course">
+					{% if not course.has_conflict %}
+						<h2><a href = "{% url 'courses:detail' slug=course.slug %}">{{course.title}}</a></h2>
+					{% else %}
+						<h2><a href = "{% url 'courses:detail' slug=course.slug %}" style ="color: red">*{{course.title}}*</a></h2>
+					{% endif %}
+					<p>{{course.snippet}}</p>
+					<p>{{course.assigned_room}}</p>
+					<p>{{course.assigned_time}}</p>
+					<p class = "professor">Taught by {{course.professor}}</p>
+				</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+
 		{% else %}
-        
+
 		<h1>Welcome to the New College Course Scheduler</h1>
 		<p>Please sign up or Login to view or add courses</p>
 		{% endif %}
-        
+
 	</body>
 
 {% endblock %}

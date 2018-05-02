@@ -18,7 +18,11 @@
 		<div class = "courses">
 			{% for course in courses %}
 				<div class = "course">
-					<h2><a href = "{% url 'courses:detail' slug=course.slug %}">{{course.title}}</a></h2>
+					{% if not course.has_conflict %}
+						<h2><a href = "{% url 'courses:detail' slug=course.slug %}">{{course.title}}</a></h2>
+					{% else %}
+						<h2><a href = "{% url 'courses:detail' slug=course.slug %}" style ="color: red">*{{course.title}}*</a></h2>
+					{% endif %}
 					<p>{{course.snippet}}</p>
 					<p>{{course.assigned_room}}</p>
 					<p>{{course.assigned_time}}</p>

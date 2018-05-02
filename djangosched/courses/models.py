@@ -22,6 +22,7 @@ class Course(models.Model):
 	assigned_room = models.CharField(max_length = 20)
 	assigned_time = models.CharField(max_length = 100)
 	has_conflict = models.BooleanField(default = False)
+	enemies = models.CharField(max_length = 3000, default = "")
 
 	def __str__(self):
 		return self.title
