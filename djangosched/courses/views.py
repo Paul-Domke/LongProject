@@ -103,7 +103,7 @@ def edit_course(request, slug):
 			course.professor = request.user
 			course.slug = slugify(request.POST.get("title", ""))
 			course.save()
-			return redirect('courses:list')
+			return redirect('courses:detail', slug=course.slug)
 	else:
 		form = forms.CreateCourse(instance = course)
 
