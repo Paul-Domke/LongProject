@@ -9,7 +9,7 @@ def signup_view(request):
 		if form.is_valid():
 			user = form.save()
 			login(request, user)
-			return redirect('courses:list')
+			return redirect('home:home-page')
 	else:
 		form = UserCreationForm()
 	return render(request, 'accounts/signup.html', {'form':form})
@@ -24,7 +24,7 @@ def login_view(request):
 			if 'next' in request.POST:
 				return redirect(request.POST.get('next'))
 			else:
-				return redirect('courses:list')
+				return redirect('home:home-page')
 	else:
 		form = AuthenticationForm()
 	return render(request, 'accounts/login.html', {'form':form})

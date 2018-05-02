@@ -105,6 +105,9 @@ class WeekTime:
     def toord(self):
         return self.day * 24 * 60 + self.hour * 60 + self.minute
 
+    def __hash__(self):
+        return hash((self.day, self.hour, self.minute))
+
 class TimeSlot:
     """
     Represents a single continuous time slot, with a start WeekTime and an
@@ -165,6 +168,9 @@ class TimeSlot:
     def toord(self):
         return self.start.toord()
 
+    def __hash__(self):
+        return hash((self.start, self.end))
+
 class TimePref:
     """
     A set of timeslots that represent a full scheduling of a course over multiple weekdays
@@ -213,3 +219,42 @@ class TimePref:
 
     def toord(self):
         return self.slots[0].toord()
+
+    def __lt__(self, other):
+        first = self.slots[0]
+        ofirst = other.slots[0]
+        answer = first.start.compare(ofirst.start)
+        return answer == -1
+
+    def __le__(self, other):
+        first = self.slots[0]
+        ofirst = other.slots[0]
+        answer = first.start.compare(ofirst.start)
+        return answer < 1
+
+    def __eq__(self, other):
+        first = self.slots[0]
+        ofirst = other.slots[0]
+        answer = first.start.compare(ofirst.start)
+        return answer == 0
+
+    def __ne__(self, other):
+        first = self.slots[0]
+        ofirst = other.slots[0]
+        answer = first.start.compare(ofirst.start)
+        return answer != 0
+
+    def __gt__(self, other):
+        first = self.slots[0]
+        ofirst = other.slots[0]
+        answer = first.start.compare(ofirst.start)
+        return answer == 1
+
+    def __ge__(self, other):
+        first = self.slots[0]
+        ofirst = other.slots[0]
+        answer = first.start.compare(ofirst.start)
+        return answer > -1
+
+    def __hash__(self):
+        return hash(tuple(self.slots))

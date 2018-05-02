@@ -3,6 +3,7 @@ import copy
 from .cons import *
 import random
 import math
+from sortedcontainers import SortedDict
 
 
 def get_solution(pref):
@@ -136,7 +137,8 @@ def get_neighbor(solution, variables, domains):
 
 def anneal_solution(solution, variables, domains, constraints):
     "Uses simulated annealing to make the best possible solution"
-    old_cost = sum([constraint(solution) for constraint in constraints])
+    sorted_sol = SortedDict(lambda x: solution[x]['time'], solution)
+    old_cost = sum([constraint(sorted_sol) for constraint in constraints])
     T = 1.0
     T_min = 0.00001
     alpha = 0.9
@@ -144,7 +146,8 @@ def anneal_solution(solution, variables, domains, constraints):
         i = 1
         while i <= 100:
             new_sol = get_neighbor(solution, variables, domains)
-            new_cost = sum([constraint(new_sol) for constraint in constraints])
+            new_sorted_sol = SortedDict(lambda x: new_sol[x]['time'], new_sol)
+            new_cost = sum([constraint(new_sorted_sol) for constraint in constraints])
             ap = acceptance_probability(old_cost, new_cost, T)
             if ap > random.random():
                 solution = new_sol
