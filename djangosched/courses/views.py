@@ -97,9 +97,13 @@ def course_create(request):
 def edit_course(request, slug):
 	course = Course.objects.get(slug=slug)
 	if request.method == "POST":
-		form = forms.CreateCourse(request.POST, instance=course, professor = request.user)
+		form = forms.CreateCourse(request.POST, instance=course)
 		if form.is_valid():
-			course = form.save()
+			course = form.save(commit=False)
+			course.professor = request.user
+			course.slug = slugify(request.POST.get("title", ""))
+			course.save()
+			return redirect('courses:list')
 	else:
 		form = forms.CreateCourse(instance = course)
 

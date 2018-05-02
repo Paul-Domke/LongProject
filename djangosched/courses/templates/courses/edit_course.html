@@ -9,9 +9,10 @@
 		<title>Edit Course</title>
 			<div class = "edit-course">
 				<h2>Edit Course</h2>
-				{{form}}
-				<form class = 'site-form' action="{% 'courses:detail' %}" method = 'post'>
-				<input type = "submit" name="editCourse" value = "Save">
+				<form class = 'site-form' method = 'post'>
+					{% csrf_token %}
+					{{form}}
+					<input type = "submit" value = "Save">
 				</form>
 			</div>
 	<script src="/static/slugify.js"></script>
