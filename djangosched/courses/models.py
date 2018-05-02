@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 from courses.choices import *
 
 # possibly make more tables and use joins to make them save room and easier to access for the individual professor, room, ect. view
