@@ -15,6 +15,7 @@ class Course(models.Model):
 	ucs_time_date3 = models.CharField(choices = UCS_TIME_CHOICES, max_length = 10)
 	slug = models.SlugField()
 	date = models.DateTimeField(auto_now_add = True)
+	Class_Size = models.IntegerField()
 	professor = models.ForeignKey(User, default = None, on_delete = True)
 	room1 = models.CharField(choices = ROOM_CHOICES, max_length = 20)
 	room2 = models.CharField(choices = ROOM_CHOICES, max_length = 20)
