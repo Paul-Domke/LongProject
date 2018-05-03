@@ -10,8 +10,10 @@ from django.template.defaultfilters import slugify
 from arbiter.artime import *
 from .forms import CreateCourse
 from django.core.exceptions import PermissionDenied
+from django.contrib.auth.decorators import user_passes_test
 
-@login_required(login_url = "/accounts/login/")
+
+@user_passes_test(lambda u: u.is_superuser)
 def apply_algo(request):
 	courses = Course.objects.all().order_by('date')
 	d = {}
