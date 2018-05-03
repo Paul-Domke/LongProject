@@ -5,7 +5,6 @@ import random
 import math
 from sortedcontainers import SortedDict
 
-
 def get_solution(pref):
     """
     This is the function to call, what this whole module is for.
@@ -97,17 +96,20 @@ def get_annealed(pref):
     Sets up annealer by making a random solution and then passing parameters
     to anneal_solution
     """
-    cons = [con_nosametimeplace, con_nosameproftime, con_level]
-    rand_sol = random_solution({}, list(pref.keys()), build_domains(pref))
-    return anneal_solution(rand_sol, list(pref.keys()), build_domains(pref), cons)
+    cons = [all_cons]
+    times = get_times_dict(pref)
+    rand_sol = random_solution({}, list(pref.keys()), build_domains(pref), times)
+    return anneal_solution(rand_sol, list(pref.keys()), build_domains(pref), cons, times)
 
-def random_solution(assign, variables, domains):
+def random_solution(assign, variables, domains, times):
     """
     Creates a fully random solution by assigning each variable a random value
     from its domain
     """
     for variable in variables:
-        assign[variable] = random.choice(domains[variable])
+        val =  random.choice(domains[variable])
+        assign[variable] = val
+        times[val['time']].append(val)
     return assign
 
 def acceptance_probability(old_cost, new_cost, T):
@@ -117,12 +119,16 @@ def acceptance_probability(old_cost, new_cost, T):
     """
     return math.e ** ((old_cost-new_cost)/T)
 
-def get_neighbor(solution, variables, domains):
+def get_neighbor(solution, variables, domains, times):
     """
     Finds a neighboring solution by picking a varible at random and changing
     its assignment to a random different value in its domain.
     """
     var = random.choice(variables)
+
+    #print('REMOVE', '\n', solution[var]['time'], times[solution[var]['time']],'\n\n', solution[var], '\n')
+    new_times = copy.deepcopy(times)
+    new_times[solution[var]['time']].remove(solution[var])
     #print(var, var)
     dom = domains[var]
     #print(domains[var] == dom)
@@ -131,27 +137,29 @@ def get_neighbor(solution, variables, domains):
     if len(dom)>1:
         dom.remove(solution[var])
     neighbor = dict(solution)
-    neighbor[var] = random.choice(dom)
+    val = random.choice(dom)
+    neighbor[var] = val
+    #print('ADD', '\n', val['time'], times[val['time']], '\n\n', val, '\n')
+    new_times[val['time']].append(val)
     dom.append(solution[var])
-    return neighbor
+    return neighbor, new_times
 
-def anneal_solution(solution, variables, domains, constraints):
+def anneal_solution(solution, variables, domains, constraints, times):
     "Uses simulated annealing to make the best possible solution"
-    sorted_sol = SortedDict(lambda x: solution[x]['time'], solution)
-    old_cost = sum([constraint(sorted_sol) for constraint in constraints])
+    old_cost = sum([constraint(times) for constraint in constraints])
     T = 1.0
     T_min = 0.00001
     alpha = 0.9
     while T > T_min:
         i = 1
         while i <= 100:
-            new_sol = get_neighbor(solution, variables, domains)
-            new_sorted_sol = SortedDict(lambda x: new_sol[x]['time'], new_sol)
-            new_cost = sum([constraint(new_sorted_sol) for constraint in constraints])
+            new_sol, new_times = get_neighbor(solution, variables, domains, times)
+            new_cost = sum([constraint(new_times) for constraint in constraints])
             ap = acceptance_probability(old_cost, new_cost, T)
             if ap > random.random():
                 solution = new_sol
                 old_cost = new_cost
+                times = new_times
             i += 1
         T = T*alpha
     mark_conflicts(solution, constraints)
@@ -229,3 +237,10 @@ def how_constraining(val, domains):
                 if val['time'].overlaps(other['time']):
                     out += 1
     return out
+
+def get_times_dict(pref):
+    times = set()
+    for course in pref:
+        for time in pref[course]['time']:
+            times.add(time)
+    return SortedDict({time:[] for time in times})
