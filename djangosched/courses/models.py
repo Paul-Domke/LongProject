@@ -23,9 +23,6 @@ class Course(models.Model):
 	assigned_time = models.CharField(max_length = 100)
 	has_conflict = models.BooleanField(default = False)
 	enemies = models.CharField(max_length = 3000, default = "")
-	cap = models.CharField(max_length = 50)
-	prerequisite = models.CharField(max_length = 300)
-	term_length = models.CharField(choices = TERM_CHOICES, max_length = 30)
 
 	def __str__(self):
 		return self.title

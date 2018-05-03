@@ -9,6 +9,7 @@
 	<link rel = "stylesheet" href="{% static 'styles.css' %}">
 	{% if user.is_superuser or user == course.professor %}
 		<td><a href="{% url 'courses:edit_course' slug=course.slug %}"><button type="button" class="btn btn-warning">Edit</button></a></td>
+		<td><a href="{% url 'courses:delete' slug=course.slug %}"><button type="submit" class="btn btn-warning">Delete</button></a></td>
 	{% endif %}
 </head>
 <div class= "course-detail">
@@ -18,9 +19,10 @@
 		{% else %}
 			<h2 style="color: red">*{{course.title}}*</h2>
 		{% endif %}
-		<p>{{course.decription}}</p>
-		<p>{{course.assigned_time}}</p>
-		<p>{{course.assigned_room}}</p>
+		<p>Description:{{course.decription}}</p>
+		<p>Prereqs:{{course.prerequisite}}</p>
+		<p>Time:{{course.assigned_time}}</p><p>Room:{{course.assigned_room}}</p>
+		<p>Length:{{course.term_length}}</p><p>Cap:{{course.cap}}</p>
 		<p class = "professor">Taught by {{course.professor}}</p>
 		{% if course.enemies != "" %}
 			<p style="color: red">This course conflicts with:<br>{{course.enemies |safe}}</p>
