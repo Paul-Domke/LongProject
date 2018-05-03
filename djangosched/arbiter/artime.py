@@ -192,8 +192,10 @@ class TimePref:
         s += str(self.slots[-1])
         return s
 
+
     def __repr__(self):
         return self.__str__()
+
 
     def overlaps(self, other):
         """ Check if I conflict with other TimePref """
