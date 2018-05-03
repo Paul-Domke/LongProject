@@ -11,6 +11,7 @@ from arbiter.artime import *
 from .forms import CreateCourse
 from django.core.exceptions import PermissionDenied
 
+@login_required(login_url = "/accounts/login/")
 def apply_algo(request):
 	courses = Course.objects.all().order_by('date')
 	d = {}
@@ -45,6 +46,7 @@ def translate_back(s):
 	return TimePref([TimeSlot(WeekTime(0,0,1), WeekTime(0,0,2))])
 
 # Create your views here.
+@login_required(login_url = "/accounts/login/")
 def course_list(request):
 	courses = Course.objects.all()
 	if request.method == "POST":
@@ -69,6 +71,7 @@ def course_list(request):
 
 	return render(request, 'courses/course_list.html', {'courses':courses, 'form':form})
 
+@login_required(login_url = "/accounts/login/")
 def prof_course_list(request, prof):
 	courses = Course.objects.filter(professor=User.objects.get(username=prof))
 	courses = sorted(courses, key=lambda course:translate_back(course.assigned_time).toord())
@@ -76,7 +79,7 @@ def prof_course_list(request, prof):
 
 	return render(request, 'courses/course_list.html', {'courses':courses, 'form':form})
 
-
+@login_required(login_url = "/accounts/login/")
 def course_details(request, slug):
 	# return HttpResponse("This is where the description will be")
 	course = Course.objects.get(slug = slug)
