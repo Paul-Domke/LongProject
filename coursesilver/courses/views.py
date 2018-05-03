@@ -126,12 +126,11 @@ def course_delete(request, slug):
 	if request.user != instance.professor and not request.user.is_superuser:
 		return redirect('courses:detail', slug=instance.slug)
 
-	if request.method == "POST":
-		form = forms.PostForm(request.POST, instance = instance)
+	if request.user == instance.professor:
+		form = forms.CreateCourse(request.GET, instance = instance)
 		if form.is_valid():
 			instance = form.delete(commit = False)
 			instance.delete()
-			return redirect('home:home_page')
+			return redirect('courses:delete', slug=instance.slug)
 	else:
-		raise PermissionDenied # import it from django.core.exceptions
-		return redirect("courses:detail", slug=course.slug)
+		return redirect('courses:list')
