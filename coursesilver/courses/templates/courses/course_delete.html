@@ -10,8 +10,9 @@
 			<div class = "edit-course">
 				<h2>Delete Course</h2>
 				<form class = 'site-form' method = 'post'>
-					{% csrf_token %}
 					<input type = "submit" value = "Delete">
+					{% csrf_token %}
+					{{form}}
 				</form>
 			</div>
 	<script src="/static/slugify.js"></script>

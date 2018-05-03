@@ -128,6 +128,6 @@ def course_delete(request, slug):
 
 	if request.user == instance.professor:
 		instance.delete()
-		return redirect('courses:delete', slug=instance.slug)
-	else:
 		return redirect('courses:list')
+	else:
+		return redirect('courses:detail', slug=instance.slug)
