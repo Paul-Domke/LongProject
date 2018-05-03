@@ -13,6 +13,7 @@ from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import user_passes_test
 
 
+
 @user_passes_test(lambda u: u.is_superuser)
 def apply_algo(request):
 	courses = Course.objects.all().order_by('date')
@@ -136,3 +137,4 @@ def course_delete(request, slug):
 		return redirect('courses:list')
 	else:
 		return redirect('courses:detail', slug=instance.slug)
+

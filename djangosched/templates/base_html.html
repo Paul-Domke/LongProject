@@ -17,7 +17,9 @@
                     <a href = "{% url 'courses:list' %}" class="button">View Courses</a>
                     <a href="{% url 'courses:create' %}" class="button">New Course</a>
                     <a href = "{% url 'admin:index' %}" class="button">Admin Page</a>
+
                     <a href = "{% url 'courses:apply_algo' %}" class="red">Create Schedule</a>
+
                     <form class = "logout" action= "{% url 'accounts:logout' %}" method = "post">
                     {% csrf_token %}
                     <button type="submit" class="button" value="Logout">Logout</button></form>
