@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/coursesilver.iml" filepath="$PROJECT_DIR$/.idea/coursesilver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/djangosched.iml" filepath="$PROJECT_DIR$/.idea/djangosched.iml" />
     </modules>
   </component>
 </project>
