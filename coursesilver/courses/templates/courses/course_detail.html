@@ -9,6 +9,7 @@
 	<link rel = "stylesheet" href="{% static 'styles.css' %}">
 	{% if user.is_superuser or user == course.professor %}
 		<td><a href="{% url 'courses:edit_course' slug=course.slug %}"><button type="button" class="btn btn-warning">Edit</button></a></td>
+		<td><a href="{% url 'courses:delete' %}"><button type="submit" class="btn btn-warning">Delete</button></a></td>
 	{% endif %}
 </head>
 <div class= "course-detail">

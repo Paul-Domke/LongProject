@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from arbiter.artime import *
 from .forms import CreateCourse
+from django.core.exceptions import PermissionDenied
 
 def apply_algo(request):
 	courses = Course.objects.all().order_by('date')
@@ -97,23 +98,40 @@ def course_create(request):
 
 @login_required(login_url = "/accounts/login/")
 def edit_course(request, slug):
-	course = Course.objects.get(slug=slug)
+	instance = Course.objects.get(slug=slug)
 
-	if request.user != course.professor and not request.user.is_superuser:
-		return redirect('courses:detail', slug=course.slug)
+	if request.user != instance.professor and not request.user.is_superuser:
+		return redirect('courses:detail', slug=instance.slug)
 
 	if request.method == "POST":
-		form = forms.CreateCourse(request.POST, instance=course)
+		form = forms.CreateCourse(request.POST, instance=instance)
 		if form.is_valid():
-			course = form.save(commit=False)
-			course.slug = slugify(request.POST.get("title", ""))
-			course.save()
-			return redirect('courses:detail', slug=course.slug)
+			instance = form.save(commit=False)
+			instance.slug = slugify(request.POST.get("title", ""))
+			instance.save()
+			return redirect('courses:detail', slug=instance.slug)
 	else:
-		form = forms.CreateCourse(instance = course)
+		form = forms.CreateCourse(instance = instance)
 
 	context = {
 		'form':form,
-		'course':course
+		'course':instance
 	}
 	return render(request, 'courses/edit_course.html', context)
+
+@login_required(login_url = "/accounts/login/")
+def course_delete(request, slug):
+	instance = Course.objects.get(slug=slug)
+
+	if request.user != instance.professor and not request.user.is_superuser:
+		return redirect('courses:detail', slug=instance.slug)
+
+	if request.method == "POST":
+		form = forms.PostForm(request.POST, instance = instance)
+		if form.is_valid():
+			instance = form.delete(commit = False)
+			instance.delete()
+			return redirect('home:home_page')
+	else:
+		raise PermissionDenied # import it from django.core.exceptions
+		return redirect("courses:detail", slug=course.slug)
