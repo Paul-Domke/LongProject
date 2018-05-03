@@ -127,8 +127,7 @@ def get_neighbor(solution, variables, domains, times):
     var = random.choice(variables)
 
     #print('REMOVE', '\n', solution[var]['time'], times[solution[var]['time']],'\n\n', solution[var], '\n')
-    new_times = copy.deepcopy(times)
-    new_times[solution[var]['time']].remove(solution[var])
+    times[solution[var]['time']].remove(solution[var])
     #print(var, var)
     dom = domains[var]
     #print(domains[var] == dom)
@@ -140,9 +139,9 @@ def get_neighbor(solution, variables, domains, times):
     val = random.choice(dom)
     neighbor[var] = val
     #print('ADD', '\n', val['time'], times[val['time']], '\n\n', val, '\n')
-    new_times[val['time']].append(val)
+    times[val['time']].append(val)
     dom.append(solution[var])
-    return neighbor, new_times
+    return neighbor, solution[var], val
 
 def anneal_solution(solution, variables, domains, constraints, times):
     "Uses simulated annealing to make the best possible solution"
@@ -153,13 +152,15 @@ def anneal_solution(solution, variables, domains, constraints, times):
     while T > T_min:
         i = 1
         while i <= 100:
-            new_sol, new_times = get_neighbor(solution, variables, domains, times)
-            new_cost = sum([constraint(new_times) for constraint in constraints])
+            new_sol, was_removed, was_added = get_neighbor(solution, variables, domains, times)
+            new_cost = sum([constraint(times) for constraint in constraints])
             ap = acceptance_probability(old_cost, new_cost, T)
             if ap > random.random():
                 solution = new_sol
                 old_cost = new_cost
-                times = new_times
+            else:
+                times[was_removed['time']].append(was_removed)
+                times[was_added['time']].remove(was_added)
             i += 1
         T = T*alpha
     mark_conflicts(solution, constraints)
