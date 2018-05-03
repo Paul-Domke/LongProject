@@ -16,7 +16,7 @@ class Course(models.Model):
 	slug = models.SlugField()
 	date = models.DateTimeField(auto_now_add = True)
 	professor = models.ForeignKey(User, default = None, on_delete = True)
-	room1 = models.CharField(choices = ROOM_CHOICES, max_length = 20)
+	room1 = models.BooleanField(choices = ROOM_CHOICES, max_length = 20)
 	room2 = models.CharField(choices = ROOM_CHOICES, max_length = 20)
 	room3 = models.CharField(choices = ROOM_CHOICES, max_length = 20)
 	assigned_room = models.CharField(max_length = 20)
