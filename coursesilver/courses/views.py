@@ -127,10 +127,7 @@ def course_delete(request, slug):
 		return redirect('courses:detail', slug=instance.slug)
 
 	if request.user == instance.professor:
-		form = forms.CreateCourse(request.GET, instance = instance)
-		if form.is_valid():
-			instance = form.delete(commit = False)
-			instance.delete()
-			return redirect('courses:delete', slug=instance.slug)
+		instance.delete()
+		return redirect('courses:delete', slug=instance.slug)
 	else:
 		return redirect('courses:list')
