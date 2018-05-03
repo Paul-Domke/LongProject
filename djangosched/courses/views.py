@@ -9,7 +9,12 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from arbiter.artime import *
 from .forms import CreateCourse
+from django.core.exceptions import PermissionDenied
+from django.contrib.auth.decorators import user_passes_test
 
+
+
+@user_passes_test(lambda u: u.is_superuser)
 def apply_algo(request):
 	courses = Course.objects.all().order_by('date')
 	d = {}
@@ -44,6 +49,7 @@ def translate_back(s):
 	return TimePref([TimeSlot(WeekTime(0,0,1), WeekTime(0,0,2))])
 
 # Create your views here.
+@login_required(login_url = "/accounts/login/")
 def course_list(request):
 	courses = Course.objects.all()
 	if request.method == "POST":
@@ -68,6 +74,7 @@ def course_list(request):
 
 	return render(request, 'courses/course_list.html', {'courses':courses, 'form':form})
 
+@login_required(login_url = "/accounts/login/")
 def prof_course_list(request, prof):
 	courses = Course.objects.filter(professor=User.objects.get(username=prof))
 	courses = sorted(courses, key=lambda course:translate_back(course.assigned_time).toord())
@@ -75,7 +82,7 @@ def prof_course_list(request, prof):
 
 	return render(request, 'courses/course_list.html', {'courses':courses, 'form':form})
 
-
+@login_required(login_url = "/accounts/login/")
 def course_details(request, slug):
 	# return HttpResponse("This is where the description will be")
 	course = Course.objects.get(slug = slug)
@@ -97,23 +104,37 @@ def course_create(request):
 
 @login_required(login_url = "/accounts/login/")
 def edit_course(request, slug):
-	course = Course.objects.get(slug=slug)
+	instance = Course.objects.get(slug=slug)
 
-	if request.user != course.professor and not request.user.is_superuser:
-		return redirect('courses:detail', slug=course.slug)
+	if request.user != instance.professor and not request.user.is_superuser:
+		return redirect('courses:detail', slug=instance.slug)
 
 	if request.method == "POST":
-		form = forms.CreateCourse(request.POST, instance=course)
+		form = forms.CreateCourse(request.POST, instance=instance)
 		if form.is_valid():
-			course = form.save(commit=False)
-			course.slug = slugify(request.POST.get("title", ""))
-			course.save()
-			return redirect('courses:detail', slug=course.slug)
+			instance = form.save(commit=False)
+			instance.slug = slugify(request.POST.get("title", ""))
+			instance.save()
+			return redirect('courses:detail', slug=instance.slug)
 	else:
-		form = forms.CreateCourse(instance = course)
+		form = forms.CreateCourse(instance = instance)
 
 	context = {
 		'form':form,
-		'course':course
+		'course':instance
 	}
 	return render(request, 'courses/edit_course.html', context)
+
+@login_required(login_url = "/accounts/login/")
+def course_delete(request, slug):
+	instance = Course.objects.get(slug=slug)
+
+	if request.user != instance.professor and not request.user.is_superuser:
+		return redirect('courses:detail', slug=instance.slug)
+
+	if request.user == instance.professor:
+		instance.delete()
+		return redirect('courses:list')
+	else:
+		return redirect('courses:detail', slug=instance.slug)
+
