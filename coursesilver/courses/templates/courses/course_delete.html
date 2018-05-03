@@ -1,0 +1,19 @@
+{% extends 'base_html.html' %}
+
+{% load static from staticfiles %}
+
+{% block content %}
+<head>
+	<meta charset = "utf-8">
+	<link rel = "stylesheet" href="{% static 'styles.css' %}">
+		<title>Delete Course</title>
+			<div class = "edit-course">
+				<h2>Delete Course</h2>
+				<form class = 'site-form' method = 'post'>
+					<input type = "submit" value = "Delete">
+					{% csrf_token %}
+					{{form}}
+				</form>
+			</div>
+	<script src="/static/slugify.js"></script>
+{% endblock %}

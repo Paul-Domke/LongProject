@@ -108,3 +108,13 @@ TERM_CHOICES = (
 	("Mod 2", ("Mod 2")), 
 	("Full Term Mod Credit", ("Full Term Mod Credit"))
 	)
+
+EQUIP_CHOICES = (
+	("Whiteboards",("Whiteboards")),
+	("Blackboards",("Blackboards")),
+	("Projector",("Projector")),
+	("Chemistry Lab",("Chemistry Lab")),
+	("Biology Lab",("Biology Lab")),
+	("Art Studio",("Art Studio")),
+	("Computers",("Computers")),
+	)
