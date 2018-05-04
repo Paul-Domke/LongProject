@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
 from courses.choices import *
+from django.core.validators import MaxValueValidator
 
 # possibly make more tables and use joins to make them save room and easier to access for the individual professor, room, ect. view
 # Create your models here.
@@ -23,8 +24,8 @@ class Course(models.Model):
 	assigned_time = models.CharField(max_length = 100)
 	has_conflict = models.BooleanField(default = False)
 	enemies = models.CharField(max_length = 3000, default = "")
-	cap = models.CharField(max_length = 50)
-	prerequisite = models.CharField(max_length = 300)
+	cap = models.IntegerField(default = 0, validators=[MaxValueValidator(85)])
+	prerequisite = models.CharField(max_length = 300, blank=True)
 	term_length = models.CharField(choices = TERM_CHOICES, max_length = 30)
 	LAC = models.BooleanField(default = False)
 	Gender_Studies = models.BooleanField(default = False)
