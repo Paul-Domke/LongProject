@@ -7,18 +7,18 @@ from courses.choices import *
 # Create your models here.
 class Course(models.Model):
 	title = models.CharField(max_length = 100)
-	decription = models.TextField()
+	description = models.TextField()
 	department = models.CharField(choices = DEPT_CHOICES, max_length = 30)
 	level = models.CharField(choices = LEVEL_CHOICES, max_length = 20)
-	ucs_time_date1 = models.CharField(choices = UCS_TIME_CHOICES, max_length = 10)
-	ucs_time_date2 = models.CharField(choices = UCS_TIME_CHOICES, max_length = 10)
-	ucs_time_date3 = models.CharField(choices = UCS_TIME_CHOICES, max_length = 10)
+	First_Time_Day_Choice = models.CharField(choices = UCS_TIME_CHOICES, max_length = 10)
+	Second_Time_Day_Choice = models.CharField(choices = UCS_TIME_CHOICES, max_length = 10)
+	Third_Time_Day_Choice = models.CharField(choices = UCS_TIME_CHOICES, max_length = 10)
 	slug = models.SlugField()
 	date = models.DateTimeField(auto_now_add = True)
 	professor = models.ForeignKey(User, default = None, on_delete = True)
-	room1 = models.CharField(choices = ROOM_CHOICES, max_length = 20)
-	room2 = models.CharField(choices = ROOM_CHOICES, max_length = 20)
-	room3 = models.CharField(choices = ROOM_CHOICES, max_length = 20)
+	First_Room_Choice = models.CharField(choices = ROOM_CHOICES, max_length = 20)
+	Second_Room_Choice = models.CharField(choices = ROOM_CHOICES, max_length = 20)
+	Third_Room_Choice = models.CharField(choices = ROOM_CHOICES, max_length = 20)
 	assigned_room = models.CharField(max_length = 20)
 	assigned_time = models.CharField(max_length = 100)
 	has_conflict = models.BooleanField(default = False)
@@ -31,4 +31,4 @@ class Course(models.Model):
 		return self.title
 
 	def snippet(self):
-		return self.decription[:50] + '...'
+		return self.description[:50] + '...'
