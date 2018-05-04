@@ -26,6 +26,9 @@ class Course(models.Model):
 	cap = models.CharField(max_length = 50)
 	prerequisite = models.CharField(max_length = 300)
 	term_length = models.CharField(choices = TERM_CHOICES, max_length = 30)
+	LAC = models.CharField(choices = LAC_CHOICES, max_length = 10)
+	Gender_Studies = models.CharField(choices = GENDER_CHOICES, max_length = 10)
+	Interdisciplinary = models.CharField(choices = INTER_CHOICES, max_length = 10)
 
 	def __str__(self):
 		return self.title
