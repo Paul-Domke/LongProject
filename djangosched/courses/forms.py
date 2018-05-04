@@ -15,6 +15,7 @@ class CreateCourse(forms.ModelForm):
 				  'room2':'Second Choice Room',
 				  'room3':'Third Choice Room',
 				  'cap':'Max Number of Students',
+				  'prerequisite':'Prerequisites',
 				  }
 		#will add more in depth, specific fields of different types to make it easier to
 		#input time and day options.
