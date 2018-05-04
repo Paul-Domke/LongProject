@@ -84,7 +84,7 @@ def anneal_solution(solution, variables, domains, constraints, times):
     alpha = 0.9
     while T > T_min:
         i = 1
-        while i <= 100:
+        while i <= 200:
 
             new_sol, was_removed, was_added = get_neighbor(solution, variables, domains, times)
             new_cost = sum([constraint(times) for constraint in constraints])
