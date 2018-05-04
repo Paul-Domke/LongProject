@@ -11,6 +11,12 @@ from arbiter.artime import *
 from .forms import CreateCourse
 from django.core.exceptions import PermissionDenied
 
+def heiser_map(request):
+	return render(request, 'courses/heisermap.html')
+
+def ace_map(request):
+	return render(request, 'courses/acemap.html')
+
 def ready_page(request):
 	if not request.user.is_superuser:
 		return redirect('home:home-page')

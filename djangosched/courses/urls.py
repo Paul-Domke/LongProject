@@ -15,6 +15,8 @@ urlpatterns = [
     url(r'^(?P<slug>[\w-]+)/$', views.course_details, name = 'detail'),
     url(r'^ready_page$', views.ready_page, name='ready_page'),
     url(r'^ready_page/apply_algo$', views.apply_algo, name = 'apply_algo'),
+    url(r'^heiser_map$', views.heiser_map, name = 'heiser_map'),
+    url(r'^ace_map$', views.ace_map, name = 'ace_map'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

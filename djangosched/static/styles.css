@@ -212,3 +212,9 @@ a.red{
 	position: relative;
 	left: 30%;
 }
+
+.map{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}

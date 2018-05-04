@@ -1,0 +1,23 @@
+{% extends 'base_html.html' %}
+
+{% load static from staticfiles %}
+
+{% block content %}
+	<head>
+		<meta charset = "utf-8">
+		<title>Ready Page</title>
+		<link rel = "stylesheet" href="{% static 'styles.css' %}">
+	</head>
+
+  <body>
+    <div class = "map">
+      <h3> ACE 1st Floor</h3>
+      <img src="{% static 'ace1.png' %}"/>
+      <h3> ACE 2st Floor</h3>
+      <img src="{% static 'ace2.png' %}"/>
+      <h3> ACE 3st Floor</h3>
+      <img src="{% static 'ACE3.png' %}"/>
+    </div>
+  </body>
+
+  {% endblock %}

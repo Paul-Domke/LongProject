@@ -1,0 +1,19 @@
+{% extends 'base_html.html' %}
+
+{% load static from staticfiles %}
+
+{% block content %}
+	<head>
+		<meta charset = "utf-8">
+		<title>Ready Page</title>
+		<link rel = "stylesheet" href="{% static 'styles.css' %}">
+	</head>
+
+  <body>
+    <div class = "map">
+      <h3> Heiser 1st Floor</h3>
+      <img src="{% static 'heiser1.png' %}"/>
+    </div>
+  </body>
+
+  {% endblock %}
