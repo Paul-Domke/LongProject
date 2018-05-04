@@ -7,14 +7,18 @@
 	<meta charset = "utf-8">
 	<title>Course</title>
 	<link rel = "stylesheet" href="{% static 'styles.css' %}">
+</head>
+
+<body>
+		<a href="{% url 'courses:heiser_map' %}" target="_blank" class = "mapButtons">Heiser Layout</a>
+		<a href="{% url 'courses:ace_map' %}" target="_blank" class = "mapButtons">Ace Layout</a>
 	<div class= "create-course">
 		<form class='site-form' action = '{% url "courses:create" %}' method = 'post'>
 			{% csrf_token %}
 			{{ form }}
 			<input type= "submit" value="Create">
 		</form>
-		<a href="{% url 'course:heiser_map' %}" target="_blank">Heiser Layout</a>
-		<a href="{% url 'course:ace_map' %}" target="_blank">Ace Layout</a>
 	</div>
+</body>
 
 {% endblock %}

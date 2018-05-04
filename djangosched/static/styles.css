@@ -219,3 +219,20 @@ a.red{
 	margin-right: auto;
 	max-width: 900px;
 }
+
+.mapButtons{
+	display: inline-block;
+	margin-top: 5%;
+	margin-left:30%;
+  margin-right:auto;
+}
+
+.create-course{
+	max-width: 80%;
+	margin-left: 10%
+}
+
+label{
+	margin-bottom: 5px;
+	margin-top: 10px;
+}
