@@ -34,6 +34,7 @@ def apply_algo(request):
 			course.has_conflict = solution[course_id]['conflict']
 			course.enemies = solution[course_id]['enemies']
 			course.save()
+		print(len(Course.objects.filter(has_conflict=True)), "conflicts")
 	else:
 		print('Arbiter Failed')
 
