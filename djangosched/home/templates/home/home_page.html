@@ -13,7 +13,7 @@
 
 		{% if user.is_authenticated %}
 
-		<h1>Welcome!!</h1>
+		<h1>Welcome {{user.first_name}} {{user.last_name}}!!!</h1>
 
 		<p>Here are your classes:</p>
 
@@ -29,7 +29,7 @@
 					<p>{{course.snippet}}</p>
 					<p>{{course.assigned_room}}</p>
 					<p>{{course.assigned_time}}</p>
-					<p class = "professor">Taught by {{course.professor}}</p>
+					<p class = "professor">Taught by {{user.first_name}} {{user.last_name}}</p>
 				</div>
 				{% endif %}
 			{% endfor %}

@@ -225,6 +225,8 @@ a.red{
 	margin-top: 5%;
 	margin-left:30%;
   margin-right:auto;
+	border: 2px solid black;
+	padding: 5px;
 }
 
 .create-course{
