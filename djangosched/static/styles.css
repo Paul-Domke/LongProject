@@ -200,3 +200,15 @@ a.red{
 	background-color: white;
 	color: black;
 }
+
+.ready_page{
+	display: block;
+	margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+.center{
+	position: relative;
+	left: 30%;
+}

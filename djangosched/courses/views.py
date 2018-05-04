@@ -11,6 +11,12 @@ from arbiter.artime import *
 from .forms import CreateCourse
 from django.core.exceptions import PermissionDenied
 
+def ready_page(request):
+	if not request.user.is_superuser:
+		return redirect('home:home-page')
+
+	return render(request, 'courses/ready_page.html')
+
 def apply_algo(request):
 	if not request.user.is_superuser:
 		return redirect('home:home-page')

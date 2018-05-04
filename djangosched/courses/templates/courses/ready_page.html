@@ -1,0 +1,22 @@
+{% extends 'base_html.html' %}
+
+{% load static from staticfiles %}
+
+{% block content %}
+	<head>
+		<meta charset = "utf-8">
+		<title>Ready Page</title>
+		<link rel = "stylesheet" href="{% static 'styles.css' %}">
+	</head>
+
+	<body>
+    <div class = "ready_page">
+      <p> The creation of the schedule can take a couple of minutes.
+        Please don't close window, doing so will make schedule wonky.</p>
+        <p> Once this button is pressed please wait until you are redirected to a new page.</p>
+        <div class = "center">
+          <a href = "{% url 'courses:apply_algo' %}" class="red" value="Creates Schedule">I understand, Create Schedule</a>
+        </div>
+    </div>
+  </body>
+{% endblock %}
