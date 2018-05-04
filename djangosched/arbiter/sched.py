@@ -4,6 +4,7 @@ from .cons import *
 import random
 import math
 from sortedcontainers import SortedDict
+from decimal import Decimal
 
 
 def get_solution(pref):
@@ -43,7 +44,7 @@ def acceptance_probability(old_cost, new_cost, T):
     Calculates the acceptance_probability of the annealing algorithm as a
     function of e^((old_cost-new_cost)/Temperature)
     """
-    return math.e ** ((old_cost-new_cost)/T)
+    return Decimal(math.e) ** Decimal((old_cost-new_cost)/T)
 
 
 def get_neighbor(solution, variables, domains, times):
@@ -154,4 +155,3 @@ def get_times_dict(pref):
         for time in pref[course]['time']:
             times.add(time)
     return SortedDict({time:[] for time in times})
-
