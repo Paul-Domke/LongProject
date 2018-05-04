@@ -118,3 +118,18 @@ EQUIP_CHOICES = (
 	("Art Studio",("Art Studio")),
 	("Computers",("Computers")),
 	)
+
+LAC_CHOICES = (
+	("Yes", ("Yes")),
+	("No", ("No")),
+	)
+
+GENDER_CHOICES = (
+	("Yes", ("Yes")),
+	("No", ("No")),
+	)
+
+INTER_CHOICES = (
+	("Yes", ("Yes")),
+	("No", ("No")),
+	)
